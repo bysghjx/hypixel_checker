@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.util.HypixelUtils;
+
 public class MainActivity6 extends AppCompatActivity {
 
     Button button;
@@ -29,20 +31,18 @@ public class MainActivity6 extends AppCompatActivity {
 
         button = findViewById(R.id.accept);
         editText = findViewById(R.id.api_key);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String api =editText.getText().toString();
-                if(TextUtils.isEmpty(api)){
-                    Toast.makeText(MainActivity6.this, "api key不能为空", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    editor.putString("api_key",api);
-                    editor.commit();
-                }
-                Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
-                startActivity(intent);
+        button.setOnClickListener(v -> {
+            String api =editText.getText().toString();
+            if(TextUtils.isEmpty(api)){
+                Toast.makeText(MainActivity6.this, "api key不能为空", Toast.LENGTH_SHORT).show();
             }
+            else{
+                editor.putString("api_key",api);
+                editor.commit();
+                HypixelUtils.setApiKey(api);
+            }
+            Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
+            startActivity(intent);
         });
     }
 }

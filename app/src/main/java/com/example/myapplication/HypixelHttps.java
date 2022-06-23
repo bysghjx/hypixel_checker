@@ -16,10 +16,6 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class HypixelHttps extends Thread{
-    Activity activity;
-    TextView textView;
-    SharedPreferences sp;
-    SharedPreferences.Editor editor;
     String uuid;
     String api_key;
     String hyp_check;
