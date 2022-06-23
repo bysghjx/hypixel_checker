@@ -1,9 +1,13 @@
 package com.example.myapplication;
 
+import static com.alibaba.fastjson.JSON.parseObject;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +19,7 @@ import java.nio.Buffer;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Https extends Thread {
+public class MojangHttps extends Thread {
 
     Activity activity;
     String name;
@@ -25,7 +29,7 @@ public class Https extends Thread {
     SharedPreferences.Editor editor;
 
 
-    public Https(Activity activity, String name) {
+    public MojangHttps(Activity activity, String name) {
         this.activity = activity;
         this.name = name;
     }
@@ -63,8 +67,30 @@ public class Https extends Thread {
                     sb.append(inputLine);
                 }
                 in.close();
+                String uuid = JSON.parseObject(String.valueOf(sb)).getString("id");
+                editor.putString("uuid",uuid);
+                editor.commit();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "查找uuid成功!正在查询Hypixel api", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }if(mojang.getResponseCode() == 204) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "找不到对应uuid!请检查用户名是否输入正确", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }if (mojang.getResponseCode() == 400){
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "出现错误请重试", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-            br.close();
             mojang.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
