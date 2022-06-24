@@ -3,6 +3,7 @@ package com.example.myapplication.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 public final class HypixelUtils {
     private static String apiKey;
 
-    public static int getPlayer(String uuid, HypixelPlayerInfo info) {
+    public static int getPlayer(String uuid, HypixelPlayerInfo info, HypixelBedWarsInfo info1) {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
@@ -24,11 +25,19 @@ public final class HypixelUtils {
             result.read();
             JSONObject json = JSON.parseObject(result.getContent());
             JSONObject player = json.getJSONObject("player");
+
+            JSONObject bedwars = player.getJSONObject("stats").getJSONObject("Bedwars");
+
             info.uuid = player.getString("uuid");
             info.name = player.getString("playername");
             info.firstLogin = new Date(player.getLongValue("firstLogin"));
             info.lastLogin = new Date(player.getLongValue("lastLogin"));
             info.language = player.getString("userLanguage");
+
+            info.final_kills_bedwars = bedwars.getIntValue("final_kills_bedwars");
+
+            info1.Experience = player.getString("Experience");
+
             List<String> list = new ArrayList<>();
             JSONArray knownAliases = player.getJSONArray("knownAliases");
             for (int i = 0; i < knownAliases.size(); i++) {

@@ -17,12 +17,20 @@ public class HypixelPlayerInfo {
     public Date lastLogin;
     public JSONObject data;
 
+    public int final_kills_bedwars;
+    public String final_kills_Bedwars;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HypixelPlayerInfo that = (HypixelPlayerInfo) o;
-        return Objects.equals(uuid, that.uuid) && Objects.equals(name, that.name) && Objects.equals(language, that.language) && Objects.equals(knownAliases, that.knownAliases) && Objects.equals(firstLogin, that.firstLogin) && Objects.equals(lastLogin, that.lastLogin) && Objects.equals(data, that.data);
+        return Objects.equals(uuid, that.uuid) && Objects.equals(name, that.name) && Objects.equals(language, that.language) && Objects.equals(knownAliases, that.knownAliases) && Objects.equals(firstLogin, that.firstLogin) && Objects.equals(lastLogin, that.lastLogin) && Objects.equals(data, that.data)&& Objects.equals(final_kills_bedwars, that.final_kills_bedwars);
+    }
+
+    public void get_kd(){
+        final_kills_Bedwars = String.valueOf(final_kills_bedwars);
+
     }
 
     @Override
@@ -35,6 +43,7 @@ public class HypixelPlayerInfo {
         result = 31 * result + (firstLogin == null ? 0 : firstLogin.hashCode());
         result = 31 * result + (lastLogin == null ? 0 : lastLogin.hashCode());
         result = 31 * result + (data == null ? 0 : data.hashCode());
+        //result = 31 * result + (final_kills_Bedwars == null ? 0 : final_kills_Bedwars.hashCode());
         return result;
     }
 
@@ -49,6 +58,7 @@ public class HypixelPlayerInfo {
                 ", firstLogin=" + firstLogin +
                 ", lastLogin=" + lastLogin +
                 ", data=" + data +
+                ", final_kills_bedwars=" + final_kills_bedwars +
                 '}';
     }
 }

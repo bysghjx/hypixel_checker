@@ -15,8 +15,8 @@ public class HypixelBedWarsInfo {
     public String coins;
     public String wins_bedwars;
 
-    public int final_kills_bedwars;
     public int kills_bedwars;
+    public int final_kills_bedwars;
     public int deaths_bedwars;
     public int final_deaths_bedwars;
     public double K_D;
@@ -64,6 +64,7 @@ public class HypixelBedWarsInfo {
 
     @Override
     public int hashCode() {
+            get_kd();
             int result = 17;
             result = 31 * result + (uuid == null ? 0 : uuid.hashCode());
             result = 31 * result + (name == null ? 0 : name.hashCode());
