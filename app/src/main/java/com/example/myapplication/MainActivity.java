@@ -7,6 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.myapplication.hypixel.HypixelPlayerInfo;
+
+import java.text.SimpleDateFormat;
+
 public class MainActivity extends AppCompatActivity {
     TextView tv;
     SharedPreferences sp;
@@ -19,9 +23,12 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("api_data",MODE_PRIVATE);
         tv = findViewById(R.id.textView);
 
-        Intent intent = getIntent();
-        String data = intent.getStringExtra("data");
-        tv.setText(data);
+        HypixelPlayerInfo pi = MainActivity7.lastQueried;
+        String str = "玩家名: " + pi.name + "\n" +
+                "玩家UUID: " + pi.uuid + "\n" +
+                "玩家最后一次上线时间: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pi.lastLogin) + "\n" +
+                "玩家语言: " + pi.language + "\n" ;
+        tv.setText(str);
 
         }
 

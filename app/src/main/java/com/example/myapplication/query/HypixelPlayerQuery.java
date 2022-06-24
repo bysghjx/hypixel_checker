@@ -34,7 +34,7 @@ public class HypixelPlayerQuery implements Callable<HypixelPlayerInfo> {
         HypixelPlayerInfo pi = new HypixelPlayerInfo();
         int code = HypixelUtils.getPlayer(uuid, pi);
         if (code == -1) {
-            onToast.accept("查询失败");
+            onToast.accept("查询失败,请检查key和用户名是否输入正确");
             Looper.loop();
             return null;
         }
@@ -42,6 +42,7 @@ public class HypixelPlayerQuery implements Callable<HypixelPlayerInfo> {
         if (code == 200) {
             return pi;
         }
+
 
         onToast.accept("Http: " + code);
         Looper.loop();

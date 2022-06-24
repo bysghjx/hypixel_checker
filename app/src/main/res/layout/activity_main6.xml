@@ -13,6 +13,7 @@
         android:layout_width="329dp"
         android:layout_height="58dp"
         android:hint="Api Key"
+        android:text="562a5ce9-9bb0-47bb-a7c6-b1d27efc6a33"
         android:inputType="none"
         tools:layout_editor_absoluteX="172dp"
         tools:layout_editor_absoluteY="268dp" />

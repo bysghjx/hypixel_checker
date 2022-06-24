@@ -19,20 +19,30 @@ public class MainActivity6 extends AppCompatActivity {
     EditText editText;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+    String api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main6);
 
+        button = findViewById(R.id.accept);
+        editText = findViewById(R.id.api_key);
 
         sp = getSharedPreferences("api_data",MODE_PRIVATE);
         editor = sp.edit();
 
-        button = findViewById(R.id.accept);
-        editText = findViewById(R.id.api_key);
+
+
+        api = sp.getString("api_key",null);
+        if (api != null){
+            api = sp.getString("api_key",null);
+            editText.setText(api);
+        }
+
+
         button.setOnClickListener(v -> {
-            String api =editText.getText().toString();
+            api =editText.getText().toString();
             if(TextUtils.isEmpty(api)){
                 Toast.makeText(MainActivity6.this, "api key不能为空", Toast.LENGTH_SHORT).show();
             }
@@ -40,9 +50,9 @@ public class MainActivity6 extends AppCompatActivity {
                 editor.putString("api_key",api);
                 editor.commit();
                 HypixelUtils.setApiKey(api);
+                Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
+                startActivity(intent);
             }
-            Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
-            startActivity(intent);
         });
     }
 }

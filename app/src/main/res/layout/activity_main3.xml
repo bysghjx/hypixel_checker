@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+    <RadioGroup
+        android:id="@+id/RG_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.211"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.579">
+
+        <RadioButton
+            android:id="@+id/Rb_Player_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="player"
+            android:checked="true"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_Bed_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bw"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_Sky_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="sw"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_Mm_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="mm"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_Arcade_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Arcade"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_TNTGames_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TNTGames"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_Duels_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Duels"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_SpeedUHC_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SpeedUHC"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_Walls3_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Walls3"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_HungerGames_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HungerGames"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_BuildBattle_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BuildBattle"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_SkyBlock_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SkyBlock"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <RadioButton
+            android:id="@+id/Rb_parkourCompletions_Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="parkourCompletions"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+    </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
