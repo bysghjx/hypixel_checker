@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".MainActivity3">
 
     <RadioGroup
         android:id="@+id/RG_select"
@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="player"
-            android:checked="true"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -106,13 +105,13 @@
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
-        <RadioButton
+<!--        <RadioButton
             android:id="@+id/Rb_SkyBlock_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SkyBlock"
             tools:layout_editor_absoluteX="36dp"
-            tools:layout_editor_absoluteY="51dp" />
+            tools:layout_editor_absoluteY="51dp" />-->
 
         <RadioButton
             android:id="@+id/Rb_parkourCompletions_Info"
@@ -123,6 +122,20 @@
             tools:layout_editor_absoluteY="51dp" />
 
     </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/RG_select"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="返回"
+        android:id="@+id/back"
+        >
+
+
+    </Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

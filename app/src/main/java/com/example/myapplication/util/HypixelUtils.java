@@ -1,8 +1,11 @@
 package com.example.myapplication.util;
 
+import android.annotation.SuppressLint;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 
 import java.util.ArrayList;
@@ -36,6 +39,48 @@ public final class HypixelUtils {
             }
             info.knownAliases = list;
             info.data = player.getJSONObject("stats");
+            return 200;
+        }
+
+        result.close();
+        return result.responseCode;
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static int getBedwars(String uuid, HypixelBedWarsInfo info) {
+        checkAPIKey();
+        String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+
+        if (result.responseCode == 200) {
+            result.read();
+
+            JSONObject json = JSON.parseObject(result.getContent());
+            JSONObject player = json.getJSONObject("player");
+            JSONObject bw = player.getJSONObject("stats").getJSONObject("Bedwars");
+            info.uuid = player.getString("uuid");
+            info.name = player.getString("playername");
+            info.Experience = bw.getIntValue("Experience");
+            info.coins = bw.getString("coins");
+            info.wins_bedwars = bw.getIntValue("wins_bedwars");
+            info.final_kills_bedwars = bw.getIntValue("final_kills_bedwars");
+            info.kills_bedwars = bw.getIntValue("kills_bedwars");
+            info.deaths_bedwars = bw.getIntValue("deaths_bedwars");
+            info.final_deaths_bedwars = bw.getIntValue("final_deaths_bedwars");
+
+            int totalKill = info.final_kills_bedwars + info.kills_bedwars;
+            int totalDeath = info.final_deaths_bedwars + info.deaths_bedwars;
+            info.K_D = String.format("%.2f", (double) totalKill / (double) totalDeath);
+
+            info.beds_lost_bedwars = bw.getIntValue("beds_lost_bedwars");
+            info.beds_broken_bedwars = bw.getIntValue("beds_broken_bedwars");
+            info.iron_resources_collected_bedwars = bw.getIntValue("iron_resources_collected_bedwars");
+            info.gold_resources_collected_bedwars = bw.getIntValue("gold_resources_collected_bedwars");
+            info.diamond_resources_collected_bedwars = bw.getIntValue("diamond_resources_collected_bedwars");
+            info.emerald_resources_collected_bedwars = bw.getIntValue("emerald_resources_collected_bedwars");
             return 200;
         }
 

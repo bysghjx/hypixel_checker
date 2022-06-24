@@ -3,23 +3,23 @@ package com.example.myapplication.query;
 import android.os.Looper;
 
 import com.example.myapplication.Acceptable;
-import com.example.myapplication.hypixel.HypixelPlayerInfo;
+import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.MojangUtils;
 
 import java.util.concurrent.Callable;
 
-public class HypixelPlayerQuery implements Callable<HypixelPlayerInfo> {
+public class HypixelBedwarsQuery implements Callable<HypixelBedWarsInfo> {
     public final String input_name;
     private final Acceptable<String> onToast;
 
-    public HypixelPlayerQuery(String input_name, Acceptable<String> onToast) {
+    public HypixelBedwarsQuery(String input_name, Acceptable<String> onToast) {
         this.input_name = input_name;
         this.onToast = onToast;
     }
 
     @Override
-    public HypixelPlayerInfo call() {
+    public HypixelBedWarsInfo call() {
         Looper.prepare();
         String uuid = MojangUtils.getUUIDByName(input_name);
         if (uuid == null) {
@@ -27,8 +27,8 @@ public class HypixelPlayerQuery implements Callable<HypixelPlayerInfo> {
             Looper.loop();
             return null;
         }
-        HypixelPlayerInfo pi = new HypixelPlayerInfo();
-        int code = HypixelUtils.getPlayer(uuid, pi);
+        HypixelBedWarsInfo bi = new HypixelBedWarsInfo();
+        int code = HypixelUtils.getBedwars(uuid, bi);
         if (code == -1) {
             onToast.accept("查询失败,请检查key和用户名是否输入正确");
             Looper.loop();
@@ -36,7 +36,7 @@ public class HypixelPlayerQuery implements Callable<HypixelPlayerInfo> {
         }
 
         if (code == 200) {
-            return pi;
+            return bi;
         }
 
 

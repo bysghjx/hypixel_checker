@@ -49,7 +49,6 @@ public class MainActivity6 extends AppCompatActivity {
             else{
                 editor.putString("api_key",api);
                 editor.commit();
-                HypixelUtils.setApiKey(api);
                 Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
                 startActivity(intent);
             }

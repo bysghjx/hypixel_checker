@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("api_data",MODE_PRIVATE);
         tv = findViewById(R.id.textView);
 
-        HypixelPlayerInfo pi = MainActivity7.lastQueried;
+        HypixelPlayerInfo pi = MainActivity7.lastQueriedPlayer;
         String str = "玩家名: " + pi.name + "\n" +
                 "玩家UUID: " + pi.uuid + "\n" +
                 "玩家最后一次上线时间: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pi.lastLogin) + "\n" +

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
+import com.example.myapplication.query.HypixelBedwarsQuery;
 import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.util.HypixelUtils;
 
@@ -39,19 +41,14 @@ public class MainActivity7 extends AppCompatActivity {
     String uuid;
     String api_key;
     String api;
-    public static HypixelPlayerInfo lastQueried;
-    String select;
+    public static HypixelPlayerInfo lastQueriedPlayer;
+    public static HypixelBedWarsInfo lastQueriedBedwars;
+    public static String select = "player";
 
 
 
 
 
-    ActivityResultLauncher launcher = registerForActivityResult(new ResultContract(), new ActivityResultCallback<String>() {
-        @Override
-        public void onActivityResult(String result) {
-            select = result;
-        }
-    });
 
 
     @Override
@@ -72,14 +69,13 @@ public class MainActivity7 extends AppCompatActivity {
 
         uuid = sp.getString("uuid", null);
         api_key = sp.getString("api_key", null);
-        editor.putString("p_data", "");
-        editor.commit();
         api = api_key;
         HypixelUtils.setApiKey(api);
 
 
         button_se.setOnClickListener(v -> {
-            launcher.launch(true);
+            Intent intent = new Intent(MainActivity7.this,MainActivity3.class);
+            startActivity(intent);
         });
 
 
@@ -90,86 +86,56 @@ public class MainActivity7 extends AppCompatActivity {
             if (TextUtils.isEmpty(name)) {
                 Toast.makeText(MainActivity7.this, "name不能为空", Toast.LENGTH_SHORT).show();
             } else {
-                /*
-                FutureTask<Void> task = new FutureTask<>(new MojangHttps(MainActivity7.this, input_name, result -> {
-                    if(sp.getString("uuid",null) != null){
-                        Thread thread1 = new HypixelHttps(uuid,api_key);
-                        Log.e("join hyp","join hyp");
-                        thread1.start();
+                switch (select){
 
-                        GetPlayerName gpn =  new GetPlayerName(MainActivity7.this);
+                    case "player":
+                        FutureTask<HypixelPlayerInfo> var0 = new FutureTask<>(new HypixelPlayerQuery(input_name, s ->
+                                Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
+                        ));
+                        new Thread(var0).start();
 
-                        String Pdata = gpn.getData();
+                        new Thread(() -> {
+                            try {
+                                HypixelPlayerInfo pi = var0.get();
+                                MainActivity7.this.runOnUiThread(() -> {
+                                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
+                                    lastQueriedPlayer = pi;
+                                    startActivity(intent);
+                                });
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                    break;
 
-                        editor.putString("Pdata",Pdata);
-                        editor.commit();
-                    }
-                }));
-                new Thread(task).start();
-                */
+                    case "bw":
+                        FutureTask<HypixelBedWarsInfo> var1 = new FutureTask<>(new HypixelBedwarsQuery(input_name, s ->
+                                Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
+                        ));
+                        new Thread(var1).start();
 
-//                    String uuid = MojangUtils.getUUIDByName(input_name);
-//                    if (uuid == null) {
-//                        Toast.makeText(MainActivity7.this, "找不到对应uuid!请检查用户名是否输入正确" , Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                    HypixelPlayerInfo pi = new HypixelPlayerInfo();
-//                    int code = HypixelUtils.getPlayer(uuid, pi);
-//                    if (code == -1) {
-//                        Toast.makeText(MainActivity7.this, "查询失败", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//
-//                    if (code == 200) {
-//                        Intent intent = new Intent(MainActivity7.this,MainActivity.class);
-//                        intent.putExtra("data",pi.toString());
-//                        startActivity(intent);
-//                        return;
-//                    }
-//
-//                    Toast.makeText(MainActivity7.this, "Http: " + code, Toast.LENGTH_SHORT).show();
+                        new Thread(() -> {
+                            try {
+                                HypixelBedWarsInfo bi = var1.get();
+                                Log.i("bi",bi.toString());
+                                MainActivity7.this.runOnUiThread(() -> {
+                                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
+                                    lastQueriedBedwars = bi;
+                                    startActivity(intent);
+                                });
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                        break;
 
-                FutureTask<HypixelPlayerInfo> task = new FutureTask<>(new HypixelPlayerQuery(input_name, s ->
-                        Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
-                ));
-                new Thread(task).start();
-/*                FutureTask<HypixelBedWarsInfo> task1 = new FutureTask<>(new HypixelPlayerQuery(input_name,s ->
-                        Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
-                ));
-                new Thread(task1).start();*/
+                }
 
-                new Thread(() -> {
-                    try {
-                        HypixelPlayerInfo pi = task.get();
-                        MainActivity7.this.runOnUiThread(() -> {
-                            Intent intent = new Intent(MainActivity7.this, MainActivity.class);
-//                            intent.putExtra("data", pi.toString());
-                            lastQueried = pi;
-                            startActivity(intent);
-                        });
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }).start();
             }
         });
 
     }
 
 
-    class ResultContract extends ActivityResultContract<Boolean, String> {
-        @NonNull
-        @Override
-        public Intent createIntent(@NonNull Context context, Boolean input) {
-            Intent intent = new Intent(MainActivity7.this, MainActivity2.class);
-            intent.putExtra("b", input);
-            return intent;
-        }
 
-        @Override
-        public String parseResult(int resultCode, @Nullable Intent intent) {
-            return intent.getStringExtra("s");
-        }
-
-    }
 }
