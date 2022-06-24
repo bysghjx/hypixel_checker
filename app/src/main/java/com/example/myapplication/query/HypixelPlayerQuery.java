@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.example.myapplication.Acceptable;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.MainActivity7;
-import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.MojangUtils;
@@ -33,8 +32,7 @@ public class HypixelPlayerQuery implements Callable<HypixelPlayerInfo> {
             return null;
         }
         HypixelPlayerInfo pi = new HypixelPlayerInfo();
-        HypixelBedWarsInfo pi1 = new HypixelBedWarsInfo();
-        int code = HypixelUtils.getPlayer(uuid, pi,pi1);
+        int code = HypixelUtils.getPlayer(uuid, pi);
         if (code == -1) {
             onToast.accept("查询失败,请检查key和用户名是否输入正确");
             Looper.loop();

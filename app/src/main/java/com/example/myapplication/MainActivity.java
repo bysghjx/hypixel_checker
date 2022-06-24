@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         String str = "玩家名: " + pi.name + "\n" +
                 "玩家UUID: " + pi.uuid + "\n" +
                 "玩家最后一次上线时间: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pi.lastLogin) + "\n" +
-                "玩家语言: " + pi.final_kills_bedwars + "\n" ;
+                "玩家语言: " + pi.language + "\n" ;
         tv.setText(str);
 
         }

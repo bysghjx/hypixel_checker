@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.util.HypixelUtils;
@@ -95,10 +94,6 @@ public class MainActivity7 extends AppCompatActivity {
                         Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
                 ));
                 new Thread(task).start();
-/*                FutureTask<HypixelBedWarsInfo> task1 = new FutureTask<>(new HypixelPlayerQuery(input_name,s ->
-                        Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
-                ));
-                new Thread(task1).start();*/
 
                 new Thread(() -> {
                     try {
