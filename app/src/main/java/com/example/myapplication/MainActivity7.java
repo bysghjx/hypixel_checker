@@ -86,6 +86,9 @@ public class MainActivity7 extends AppCompatActivity {
             if (TextUtils.isEmpty(name)) {
                 Toast.makeText(MainActivity7.this, "name不能为空", Toast.LENGTH_SHORT).show();
             } else {
+                if(select == null){
+                    select = "player";
+                }
                 switch (select){
 
                     case "player":
