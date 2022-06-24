@@ -15,6 +15,7 @@ public class MainActivity3 extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton radioButton;
     Button button;
+    String id;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
@@ -33,23 +34,42 @@ public class MainActivity3 extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.Rb_Bed_Info:{
-                        String id ="bw";
+                         id ="bw";
                         MainActivity7.select = id;
                         break;
                     }
                     case R.id.Rb_Player_Info:{
-                        String id = "player";
+                        id = "player";
                         MainActivity7.select = id;
                         break;
                     }
                     case R.id.Rb_BuildBattle_Info:{
-                        String id = "BuildBattle";
+                         id = "BuildBattle";
                         MainActivity7.select = id;
                         break;
                     }
-
+                    case R.id.Rb_Arcade_Info:{
+                         id = "Arcade";
+                        MainActivity7.select = id;
+                        break;
+                    }
+                    case R.id.Rb_Mm_Info:{
+                         id = "Mm";
+                        MainActivity7.select = id;
+                        break;
+                    }
+                    case R.id.Rb_Sky_Info:{
+                         id = "Sky";
+                        MainActivity7.select = id;
+                        break;
+                    }
+                    case R.id.Rb_Duels_Info:{
+                         id = "Duel";
+                        MainActivity7.select = id;
+                        break;
+                    }
                     default:{
-                        String id = "player";
+                         id = "player";
                         MainActivity7.select = id;
                         break;
                     }

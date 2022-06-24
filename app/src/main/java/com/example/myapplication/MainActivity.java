@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends AppCompatActivity {
     TextView tv;
     SharedPreferences sp;
+    String str;
     SharedPreferences.Editor editor;
 
     @Override
@@ -22,12 +24,27 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("api_data",MODE_PRIVATE);
         tv = findViewById(R.id.textView);
 
-        HypixelPlayerInfo pi = MainActivity7.lastQueriedPlayer;
-        String str = "玩家名: " + pi.name + "\n" +
-                "玩家UUID: " + pi.uuid + "\n" +
-                "玩家最后一次上线时间: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pi.lastLogin) + "\n" +
-                "玩家语言: " + pi.language + "\n" ;
-        tv.setText(str);
+
+        switch (MainActivity7.select){
+            case "player": {
+                HypixelPlayerInfo pi = MainActivity7.lastQueriedPlayer;
+                str = "玩家名: " + pi.name + "\n" +
+                        "玩家UUID: " + pi.uuid + "\n" +
+                        "玩家最后一次上线时间: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pi.lastLogin) + "\n" +
+                        "玩家语言: " + pi.language + "\n";
+                tv.setText(str);
+                break;
+            }
+            case "bw":{
+                HypixelBedWarsInfo bi = MainActivity7.lastQueriedBedwars;
+                str = "玩家名: " + bi.name + "\n" +
+                        "玩家UUID: " + bi.uuid + "\n" +
+                        "经验值: " + bi.Experience +"\n" ;
+                tv.setText(str);
+                break;
+            }
+        }
+
 
         }
 
