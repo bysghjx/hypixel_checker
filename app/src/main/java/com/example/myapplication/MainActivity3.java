@@ -43,16 +43,6 @@ public class MainActivity3 extends AppCompatActivity {
                         MainActivity7.select = id;
                         break;
                     }
-                    case R.id.Rb_BuildBattle_Info:{
-                         id = "BuildBattle";
-                        MainActivity7.select = id;
-                        break;
-                    }
-                    case R.id.Rb_Arcade_Info:{
-                         id = "Arcade";
-                        MainActivity7.select = id;
-                        break;
-                    }
                     case R.id.Rb_Mm_Info:{
                          id = "Mm";
                         MainActivity7.select = id;
