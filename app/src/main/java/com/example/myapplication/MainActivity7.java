@@ -22,11 +22,13 @@ import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
+import com.example.myapplication.hypixel.HypixelUHCInfo;
 import com.example.myapplication.query.HypixelBedwarsQuery;
 import com.example.myapplication.query.HypixelDuelQuery;
 import com.example.myapplication.query.HypixelMurderMysteryQuery;
 import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.query.HypixelSkyWarsQuery;
+import com.example.myapplication.query.HypixelUHCQuery;
 import com.example.myapplication.util.HypixelUtils;
 
 import java.util.ArrayList;
@@ -52,11 +54,8 @@ public class MainActivity7 extends AppCompatActivity {
     public static HypixelSkyWarsInfo lastQueriedSkywars;
     public static HypixelDuelInfo lastQueriedDuels;
     public static HypixelMurderMysteryInfo lastQueriedMm;
+    public static HypixelUHCInfo lastQueriedUHC;
     public static String select = "player";
-
-
-
-
 
 
 
@@ -195,6 +194,27 @@ public class MainActivity7 extends AppCompatActivity {
                                 MainActivity7.this.runOnUiThread(() -> {
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedMm = mi;
+                                    startActivity(intent);
+                                });
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                        break;
+                    }
+                    case "UHC":{
+                        FutureTask<HypixelUHCInfo> var5 = new FutureTask<>(new HypixelUHCQuery(input_name, s ->
+                                Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
+                        ));
+                        new Thread(var5).start();
+
+                        new Thread(() -> {
+                            try {
+                                HypixelUHCInfo ui = var5.get();
+                                Log.i("ui",ui.toString());
+                                MainActivity7.this.runOnUiThread(() -> {
+                                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
+                                    lastQueriedUHC = ui;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {

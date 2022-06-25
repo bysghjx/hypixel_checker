@@ -10,6 +10,7 @@ import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
+import com.example.myapplication.hypixel.HypixelUHCInfo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -202,6 +203,32 @@ public final class HypixelUtils {
 
         result.close();
         return result.responseCode;
+    }
+    public static int getUHC(String uuid, HypixelUHCInfo info){
+        checkAPIKey();
+        String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+            if (result.responseCode == 200) {
+                result.read();
+                JSONObject json = JSON.parseObject(result.getContent());
+                JSONObject player = json.getJSONObject("player");
+                JSONObject uhc = player.getJSONObject("stats").getJSONObject("UHC");
+                info.uuid = player.getString("uuid");
+                info.name = player.getString("playername");
+                info.coins = uhc.getString("coins");
+                info.kills = uhc.getIntValue("kills");
+                info.deaths = uhc.getIntValue("deaths");
+                info.wins = uhc.getIntValue("wins");
+                info.heads_eaten = uhc.getIntValue("heads_eaten");
+                info.KD = String.format("%.2f", (double) info.kills / (double) info.deaths);
+
+                return 200;
+            }
+            result.close();
+            return result.responseCode;
     }
 
     public static void setApiKey(String apiKey) {

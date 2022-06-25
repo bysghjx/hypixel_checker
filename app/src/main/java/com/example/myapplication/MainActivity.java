@@ -11,6 +11,7 @@ import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
+import com.example.myapplication.hypixel.HypixelUHCInfo;
 
 import java.text.SimpleDateFormat;
 
@@ -99,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
                         "陷阱/弓/刀击杀: " + mi.trap_kills + "/" + mi.bow_kills + "/" +mi.knife_kills + "\n" +
                         "成为英雄次数：" + mi.was_hero + "\n" +
                         "侦探/杀手胜场：" + mi.detective_wins + "/" + mi.murderer_wins + "\n" ;
+                tv.setText(str);
+                break;
+            }
+            case "UHC": {
+                HypixelUHCInfo ui = MainActivity7.lastQueriedUHC;
+                str = "玩家名: " + ui.name + "\n" +
+                        "玩家UUID: " + ui.uuid + "\n" +
+                        "Coins：" + ui.coins + "\n" +
+                        "K/D：" + ui.KD + "\n" +
+                        "总击杀/死亡：" +ui.kills + "/" +ui.deaths + "\n" +
+                        "总胜场: " + ui.wins + "\n" +
+                        "吃掉的头颅数量：" + ui.heads_eaten + "\n" ;
                 tv.setText(str);
                 break;
             }

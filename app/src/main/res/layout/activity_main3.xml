@@ -74,18 +74,18 @@
             tools:layout_editor_absoluteY="51dp" />
 
         <RadioButton
-            android:id="@+id/Rb_SpeedUHC_Info"
+            android:id="@+id/Rb_UHC_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SpeedUHC"
+            android:text="UHC"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
         <RadioButton
-            android:id="@+id/Rb_Walls3_Info"
+            android:id="@+id/Rb_Walls_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Walls3"
+            android:text="Walls"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
