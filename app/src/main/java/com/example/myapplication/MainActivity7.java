@@ -18,9 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
+import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 import com.example.myapplication.query.HypixelBedwarsQuery;
+import com.example.myapplication.query.HypixelDuelQuery;
 import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.util.HypixelUtils;
@@ -46,6 +48,7 @@ public class MainActivity7 extends AppCompatActivity {
     public static HypixelPlayerInfo lastQueriedPlayer;
     public static HypixelBedWarsInfo lastQueriedBedwars;
     public static HypixelSkyWarsInfo lastQueriedSkywars;
+    public static HypixelDuelInfo lastQueriedDuels;
     public static String select = "player";
 
 
@@ -154,7 +157,27 @@ public class MainActivity7 extends AppCompatActivity {
                             }
                         }).start();
                         break;
+                    }
+                    case "Duel":{
+                        FutureTask<HypixelDuelInfo> var3 = new FutureTask<>(new HypixelDuelQuery(input_name, s ->
+                                Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
+                        ));
+                        new Thread(var3).start();
 
+                        new Thread(() -> {
+                            try {
+                                HypixelDuelInfo di = var3.get();
+                                Log.i("di",di.toString());
+                                MainActivity7.this.runOnUiThread(() -> {
+                                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
+                                    lastQueriedDuels = di;
+                                    startActivity(intent);
+                                });
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                        break;
                     }
                 }
 

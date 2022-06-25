@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
+import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 
@@ -117,6 +118,46 @@ public final class HypixelUtils {
             info.WL = String.format("%.2f",(double)info.wins / (double) info.losses);
 
             info.most_kills_game = sw.getString("most_kills_game");
+            return 200;
+        }
+
+        result.close();
+        return result.responseCode;
+    }
+    public static int getDuel(String uuid, HypixelDuelInfo info) {
+        checkAPIKey();
+        String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+
+        if (result.responseCode == 200) {
+            result.read();
+            JSONObject json = JSON.parseObject(result.getContent());
+            JSONObject player = json.getJSONObject("player");
+            JSONObject du = player.getJSONObject("stats").getJSONObject("Duels");
+            info.uuid = player.getString("uuid");
+            info.name = player.getString("playername");
+            info.total_wins = du.getIntValue("wins");
+            info.total_losses = du.getIntValue("losses");
+            info.total_kills = du.getIntValue("kills");
+            info.total_deaths = du.getIntValue("deaths");
+            info.coins = du.getString("coins");
+            info.uhc_duel_kills = du.getIntValue("uhc_duel_kills");
+            info.uhc_duel_deaths = du.getIntValue("uhc_duel_deaths");
+            info.potion_duel_kills = du.getIntValue("potion_duel_kills");
+            info.potion_duel_deaths = du.getIntValue("potion_duel_deaths");
+            info.sumo_duel_kills = du.getIntValue("sumo_duel_kills");
+            info.sumo_duel_deaths = du.getIntValue("sumo_duel_deaths");
+            info.classic_duel_kills = du.getIntValue("classic_duel_kills");
+            info.classic_duel_deaths = du.getIntValue("classic_duel_deaths");
+            info.bow_duel_kills = du.getIntValue("bow_duel_kills");
+            info.bow_duel_deaths = du.getIntValue("bow_duel_deaths");
+            info.combo_duel_kills = du.getIntValue("classic_duel_kills");
+            info.combo_duel_deaths = du.getIntValue("classic_duel_deaths");
+            info.total_kd = String.format("%.2f", (double) info.total_kills / (double) info.total_deaths);
+
             return 200;
         }
 

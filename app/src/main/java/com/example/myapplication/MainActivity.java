@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
+import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 
@@ -63,6 +64,24 @@ public class MainActivity extends AppCompatActivity {
                         "失败数：" +si.losses +"\n" +
                         "W/L比：" +si.WL + "\n" +
                         "最多击杀数：" +si.most_kills_game +"\n";
+                tv.setText(str);
+                break;
+            }
+            case "Duel":{
+                HypixelDuelInfo di = MainActivity7.lastQueriedDuels;
+                str = "玩家名: " + di.name + "\n" +
+                        "玩家UUID: " + di.uuid + "\n" +
+                        "总K/D：" + di.total_kd + "\n" +
+                        "Coins：" + di.coins + "\n" +
+                        "总胜场/败场: " + di.total_wins + "/" + di.total_losses + "\n" +
+                        "总击杀/死亡：" +di.total_kills + "/" +di.total_deaths + "\n" +
+                        "UHC 击杀/死亡：" + di.uhc_duel_kills + "/"+ di.uhc_duel_deaths + "\n" +
+                        "UHC 击杀/死亡：" + di.uhc_duel_kills + "/"+ di.uhc_duel_deaths + "\n" +
+                        "potion 击杀/死亡：" + di.potion_duel_kills + "/"+ di.potion_duel_deaths + "\n" +
+                        "sumo 击杀/死亡：" + di.sumo_duel_kills + "/"+ di.sumo_duel_deaths + "\n" +
+                        "classic 击杀/死亡：" + di.classic_duel_kills + "/"+ di.classic_duel_deaths + "\n" +
+                        "bow 击杀/死亡：" + di.bow_duel_kills + "/"+ di.bow_duel_deaths + "\n" +
+                        "combo 击杀/死亡：" + di.combo_duel_kills + "/"+ di.combo_duel_deaths + "\n";
                 tv.setText(str);
                 break;
             }
