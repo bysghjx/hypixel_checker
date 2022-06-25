@@ -58,8 +58,8 @@ public class MainActivity3 extends AppCompatActivity {
                         MainActivity7.select = id;
                         break;
                     }
-                    case R.id.Rb_Sky_Info:{
-                         id = "Sky";
+                    case R.id.Rb_SkyWars_Info:{
+                         id = "SkyWars";
                         MainActivity7.select = id;
                         break;
                     }

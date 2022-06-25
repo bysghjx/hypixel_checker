@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
+import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,6 +82,41 @@ public final class HypixelUtils {
             info.gold_resources_collected_bedwars = bw.getIntValue("gold_resources_collected_bedwars");
             info.diamond_resources_collected_bedwars = bw.getIntValue("diamond_resources_collected_bedwars");
             info.emerald_resources_collected_bedwars = bw.getIntValue("emerald_resources_collected_bedwars");
+            return 200;
+        }
+
+        result.close();
+        return result.responseCode;
+    }
+    public static int getSkyWars(String uuid, HypixelSkyWarsInfo info) {
+        checkAPIKey();
+        String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+
+        if (result.responseCode == 200) {
+            result.read();
+            JSONObject json = JSON.parseObject(result.getContent());
+            JSONObject player = json.getJSONObject("player");
+            JSONObject sw = player.getJSONObject("stats").getJSONObject("SkyWars");
+            info.uuid = player.getString("uuid");
+            info.name = player.getString("playername");
+            info.souls = sw.getIntValue("souls");
+            info.coins = sw.getString("coins");
+            info.skywars_experience = sw.getIntValue("skywars_experience");
+            info.kills = sw.getIntValue("kills");
+            info.deaths = sw.getIntValue("deaths");
+
+            info.KD = String.format("%.2f", (double) info.kills / (double) info.deaths);
+
+            info.wins = sw.getIntValue("wins");
+            info.losses = sw.getIntValue("losses");
+
+            info.WL = String.format("%.2f",(double)info.wins / (double) info.losses);
+
+            info.most_kills_game = sw.getString("most_kills_game");
             return 200;
         }
 

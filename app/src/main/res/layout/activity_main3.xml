@@ -34,7 +34,7 @@
             tools:layout_editor_absoluteY="51dp" />
 
         <RadioButton
-            android:id="@+id/Rb_Sky_Info"
+            android:id="@+id/Rb_SkyWars_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="sw"

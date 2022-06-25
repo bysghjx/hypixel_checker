@@ -19,8 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
+import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 import com.example.myapplication.query.HypixelBedwarsQuery;
 import com.example.myapplication.query.HypixelPlayerQuery;
+import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.util.HypixelUtils;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class MainActivity7 extends AppCompatActivity {
     String api;
     public static HypixelPlayerInfo lastQueriedPlayer;
     public static HypixelBedWarsInfo lastQueriedBedwars;
+    public static HypixelSkyWarsInfo lastQueriedSkywars;
     public static String select = "player";
 
 
@@ -131,7 +134,28 @@ public class MainActivity7 extends AppCompatActivity {
                             }
                         }).start();
                         break;
+                    case "SkyWars" : {
+                        FutureTask<HypixelSkyWarsInfo> var2 = new FutureTask<>(new HypixelSkyWarsQuery(input_name, s ->
+                                Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
+                        ));
+                        new Thread(var2).start();
 
+                        new Thread(() -> {
+                            try {
+                                HypixelSkyWarsInfo si = var2.get();
+                                Log.i("si",si.toString());
+                                MainActivity7.this.runOnUiThread(() -> {
+                                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
+                                    lastQueriedSkywars = si;
+                                    startActivity(intent);
+                                });
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                        break;
+
+                    }
                 }
 
             }
