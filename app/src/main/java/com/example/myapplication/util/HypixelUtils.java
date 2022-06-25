@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
+import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 
@@ -158,6 +159,44 @@ public final class HypixelUtils {
             info.combo_duel_deaths = du.getIntValue("classic_duel_deaths");
             info.total_kd = String.format("%.2f", (double) info.total_kills / (double) info.total_deaths);
 
+            return 200;
+        }
+
+        result.close();
+        return result.responseCode;
+    }
+
+    public static int getMm(String uuid, HypixelMurderMysteryInfo info) {
+        checkAPIKey();
+        String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+
+        if (result.responseCode == 200) {
+            result.read();
+            JSONObject json = JSON.parseObject(result.getContent());
+            JSONObject player = json.getJSONObject("player");
+            JSONObject mm = player.getJSONObject("stats").getJSONObject("MurderMystery");
+            info.uuid = player.getString("uuid");
+            info.name = player.getString("playername");
+            info.coins = mm.getString("coins");
+            info.kills = mm.getIntValue("kills");
+            info.deaths = mm.getIntValue("deaths");
+            info.wins = mm.getIntValue("wins");
+            info.losses = mm.getIntValue("losses");
+            info.detective_chance = mm.getIntValue("detective_chance");
+            info.murderer_chance = mm.getIntValue("murderer_chance");
+            info.trap_kills = mm.getIntValue("trap_kills");
+            info.bow_kills = mm.getIntValue("bow_kills");
+            info.knife_kills = mm.getIntValue("knife_kills");
+            info.was_hero = mm.getIntValue("was_hero");
+            info.detective_wins = mm.getIntValue("detective_wins");
+            info.murderer_wins = mm.getIntValue("murderer_wins");
+            info.KD =  String.format("%.2f", (double) info.kills / (double) info.deaths);
+
+            info.WL =  String.format("%.2f", (double) info.wins / (double) info.losses);
             return 200;
         }
 

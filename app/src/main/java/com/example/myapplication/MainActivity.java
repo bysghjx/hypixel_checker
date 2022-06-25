@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
+import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 
@@ -82,6 +83,22 @@ public class MainActivity extends AppCompatActivity {
                         "classic 击杀/死亡：" + di.classic_duel_kills + "/"+ di.classic_duel_deaths + "\n" +
                         "bow 击杀/死亡：" + di.bow_duel_kills + "/"+ di.bow_duel_deaths + "\n" +
                         "combo 击杀/死亡：" + di.combo_duel_kills + "/"+ di.combo_duel_deaths + "\n";
+                tv.setText(str);
+                break;
+            }
+            case "Mm":{
+                HypixelMurderMysteryInfo mi = MainActivity7.lastQueriedMm;
+                str = "玩家名: " + mi.name + "\n" +
+                        "玩家UUID: " + mi.uuid + "\n" +
+                        "Coins：" + mi.coins + "\n" +
+                        "K/D：" + mi.KD + "\n" +
+                        "W/L：" + mi.WL + "\n" +
+                        "总击杀/死亡：" +mi.kills + "/" +mi.deaths + "\n" +
+                        "总胜场/败场: " + mi.wins + "/" + mi.losses + "\n" +
+                        "侦探/杀手几率: " + mi.detective_chance + "/" + mi.murderer_chance + "\n" +
+                        "陷阱/弓/刀击杀: " + mi.trap_kills + "/" + mi.bow_kills + "/" +mi.knife_kills + "\n" +
+                        "成为英雄次数：" + mi.was_hero + "\n" +
+                        "侦探/杀手胜场：" + mi.detective_wins + "/" + mi.murderer_wins + "\n" ;
                 tv.setText(str);
                 break;
             }
