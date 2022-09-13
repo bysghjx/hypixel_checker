@@ -41,7 +41,7 @@ public class MainActivity7 extends AppCompatActivity {
 
 
 
-    Button button, button_se;
+    Button button, button_se,resetkey;
     EditText editText;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -68,6 +68,9 @@ public class MainActivity7 extends AppCompatActivity {
 
         setContentView(R.layout.activity_main7);
 
+
+
+        resetkey = findViewById(R.id.btn_reset);
         button_se = findViewById(R.id.select);
         editText = findViewById(R.id.mc_name);
         button = findViewById(R.id.button6);
@@ -80,6 +83,12 @@ public class MainActivity7 extends AppCompatActivity {
         api = api_key;
         HypixelUtils.setApiKey(api);
 
+        resetkey.setOnClickListener(v ->{
+            editor.remove("api_key");
+            editor.commit();
+            Intent intent = new Intent(MainActivity7.this,MainActivity6.class);
+            startActivity(intent);
+        });
 
         button_se.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity7.this,MainActivity3.class);

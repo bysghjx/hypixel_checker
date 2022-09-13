@@ -37,7 +37,10 @@ public class MainActivity6 extends AppCompatActivity {
         api = sp.getString("api_key",null);
         if (api != null){
             api = sp.getString("api_key",null);
-            editText.setText(api);
+            HypixelUtils.setApiKey(api);
+            Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
+            startActivity(intent);
+            finish();
         }
 
 
@@ -51,6 +54,7 @@ public class MainActivity6 extends AppCompatActivity {
                 editor.commit();
                 Intent intent = new Intent(MainActivity6.this,MainActivity7.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

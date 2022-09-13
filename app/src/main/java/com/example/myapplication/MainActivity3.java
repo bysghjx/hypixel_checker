@@ -38,11 +38,6 @@ public class MainActivity3 extends AppCompatActivity {
                         MainActivity7.select = id;
                         break;
                     }
-                    case R.id.Rb_Player_Info:{
-                        id = "player";
-                        MainActivity7.select = id;
-                        break;
-                    }
                     case R.id.Rb_Mm_Info:{
                          id = "Mm";
                         MainActivity7.select = id;
@@ -75,6 +70,7 @@ public class MainActivity3 extends AppCompatActivity {
         button.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity3.this,MainActivity7.class);
             startActivity(intent);
+            finish();
         });
 
 
