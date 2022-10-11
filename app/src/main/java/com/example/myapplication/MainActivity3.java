@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ public class MainActivity3 extends AppCompatActivity {
     String id;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+    Toolbar tb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,10 @@ public class MainActivity3 extends AppCompatActivity {
         radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
         sp = getSharedPreferences("api_data",0);
         editor = sp.edit();
+        tb = findViewById(R.id.tb);
+
+        tb.setNavigationOnClickListener(v -> finish());
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

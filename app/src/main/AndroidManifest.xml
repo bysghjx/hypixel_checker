@@ -24,7 +24,15 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity7"
-            android:exported="false" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity7">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity7"
+                />
+        </activity>
+
         <activity
             android:name=".MainActivity6"
             android:exported="true">
