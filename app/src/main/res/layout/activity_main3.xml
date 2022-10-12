@@ -33,7 +33,7 @@
             android:id="@+id/Rb_Player_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="玩家信息"
+            android:text="@string/P_info"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/Rb_Bed_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BedWars"
+            android:text="@string/Bedwars"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/Rb_SkyWars_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SkyWars"
+            android:text="@string/Sky_wars"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -73,7 +73,7 @@
             android:id="@+id/Rb_Mm_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MurderMystery"
+            android:text="@string/Murder_Mystery"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -81,7 +81,7 @@
             android:id="@+id/Rb_Duels_Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Duels"
+            android:text="@string/Duels"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -89,7 +89,7 @@
             android:id="@+id/Rb_UHC_Info"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="UHC"
+            android:text="@string/UHC"
             tools:layout_editor_absoluteX="36dp"
             tools:layout_editor_absoluteY="51dp" />
 
@@ -142,7 +142,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/RG_select"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="返回"
+        android:text="@string/Goback"
         android:id="@+id/back"
         >
 

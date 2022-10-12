@@ -6,27 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity6"
     android:orientation="vertical"
-    android:gravity="center">
+    >
 
-    <EditText
-        android:id="@+id/api_key"
-        android:layout_width="393dp"
-        android:layout_height="61dp"
-        android:background="@drawable/selecter"
-        android:hint="Api Key"
-        android:inputType="none"
-        android:padding="10dp"
-        android:text="562a5ce9-9bb0-47bb-a7c6-b1d27efc6a33"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="268dp" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:subtitle="@string/app_name"
+        app:title="@string/app_name" />
 
-    <Button
-        android:id="@+id/accept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="提交"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="341dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/api_key"
+            android:layout_width="393dp"
+            android:layout_height="61dp"
+            android:background="@drawable/selecter"
+            android:hint="Api Key"
+            android:inputType="none"
+            android:padding="10dp"
+            android:text="562a5ce9-9bb0-47bb-a7c6-b1d27efc6a33"
+            tools:layout_editor_absoluteX="172dp"
+            tools:layout_editor_absoluteY="268dp" />
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Commit"
+            tools:layout_editor_absoluteX="158dp"
+            tools:layout_editor_absoluteY="341dp" />
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

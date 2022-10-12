@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="P_info">玩家信息</string>
+    <string name="Bedwars">BedWars</string>
+    <string name="Sky_wars">SkyWars</string>
+    <string name="Murder_Mystery">MurderMystery</string>
+    <string name="Duels">Duels</string>
+    <string name="UHC">UHC</string>
+    <string name="Goback">返回</string>
+    <string name="Commit">提交</string>
 </resources>
