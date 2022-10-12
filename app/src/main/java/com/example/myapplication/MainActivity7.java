@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +31,7 @@ import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.query.HypixelUHCQuery;
 import com.example.myapplication.util.HypixelUtils;
+import com.example.myapplication.util.WaitDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +43,7 @@ public class MainActivity7 extends AppCompatActivity {
 
 
 
-    Button button, button_se,resetkey;
+    Button query, button_se,resetkey;
     EditText editText;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -73,7 +75,8 @@ public class MainActivity7 extends AppCompatActivity {
         resetkey = findViewById(R.id.btn_reset);
         button_se = findViewById(R.id.select);
         editText = findViewById(R.id.mc_name);
-        button = findViewById(R.id.button6);
+        query = findViewById(R.id.button6);
+
 
         sp = getSharedPreferences("api_data", MODE_PRIVATE);
         editor = sp.edit();
@@ -96,12 +99,21 @@ public class MainActivity7 extends AppCompatActivity {
         });
 
 
-        button.setOnClickListener(v -> {
+        query.setOnClickListener(v -> {
+            query.setEnabled(false);
+            button_se.setEnabled(false);
+            resetkey.setEnabled(false);
+            editText.setEnabled(false);
+
             String name = editText.getText().toString();
             input_name = name;
 
             if (TextUtils.isEmpty(name)) {
                 Toast.makeText(MainActivity7.this, "name不能为空", Toast.LENGTH_SHORT).show();
+                query.setEnabled(true);
+                button_se.setEnabled(true);
+                resetkey.setEnabled(true);
+                editText.setEnabled(true);
             } else {
                 if(select == null){
                     select = "player";
@@ -116,8 +128,14 @@ public class MainActivity7 extends AppCompatActivity {
 
                         new Thread(() -> {
                             try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelPlayerInfo pi = var0.get();
                                 MainActivity7.this.runOnUiThread(() -> {
+                                    button_se.setEnabled(true);
+                                    resetkey.setEnabled(true);
+                                    query.setEnabled(true);
+                                    editText.setEnabled(true);
+                                    WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedPlayer = pi;
                                     startActivity(intent);
@@ -136,9 +154,15 @@ public class MainActivity7 extends AppCompatActivity {
 
                         new Thread(() -> {
                             try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelBedWarsInfo bi = var1.get();
                                 Log.i("bi",bi.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
+                                    button_se.setEnabled(true);
+                                    resetkey.setEnabled(true);
+                                    query.setEnabled(true);
+                                    editText.setEnabled(true);
+                                    WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedBedwars = bi;
                                     startActivity(intent);
@@ -148,6 +172,7 @@ public class MainActivity7 extends AppCompatActivity {
                             }
                         }).start();
                         break;
+
                     case "SkyWars" : {
                         FutureTask<HypixelSkyWarsInfo> var2 = new FutureTask<>(new HypixelSkyWarsQuery(input_name, s ->
                                 Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
@@ -156,9 +181,15 @@ public class MainActivity7 extends AppCompatActivity {
 
                         new Thread(() -> {
                             try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelSkyWarsInfo si = var2.get();
                                 Log.i("si",si.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
+                                    button_se.setEnabled(true);
+                                    resetkey.setEnabled(true);
+                                    query.setEnabled(true);
+                                    editText.setEnabled(true);
+                                    WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedSkywars = si;
                                     startActivity(intent);
@@ -169,6 +200,7 @@ public class MainActivity7 extends AppCompatActivity {
                         }).start();
                         break;
                     }
+
                     case "Duel":{
                         FutureTask<HypixelDuelInfo> var3 = new FutureTask<>(new HypixelDuelQuery(input_name, s ->
                                 Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
@@ -177,9 +209,15 @@ public class MainActivity7 extends AppCompatActivity {
 
                         new Thread(() -> {
                             try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelDuelInfo di = var3.get();
                                 Log.i("di",di.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
+                                    button_se.setEnabled(true);
+                                    resetkey.setEnabled(true);
+                                    query.setEnabled(true);
+                                    editText.setEnabled(true);
+                                    WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedDuels = di;
                                     startActivity(intent);
@@ -190,6 +228,7 @@ public class MainActivity7 extends AppCompatActivity {
                         }).start();
                         break;
                     }
+
                     case "Mm":{
                         FutureTask<HypixelMurderMysteryInfo> var4 = new FutureTask<>(new HypixelMurderMysteryQuery(input_name, s ->
                                 Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
@@ -198,9 +237,15 @@ public class MainActivity7 extends AppCompatActivity {
 
                         new Thread(() -> {
                             try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelMurderMysteryInfo mi = var4.get();
                                 Log.i("mi",mi.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
+                                    button_se.setEnabled(true);
+                                    resetkey.setEnabled(true);
+                                    query.setEnabled(true);
+                                    editText.setEnabled(true);
+                                    WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedMm = mi;
                                     startActivity(intent);
@@ -211,6 +256,7 @@ public class MainActivity7 extends AppCompatActivity {
                         }).start();
                         break;
                     }
+
                     case "UHC":{
                         FutureTask<HypixelUHCInfo> var5 = new FutureTask<>(new HypixelUHCQuery(input_name, s ->
                                 Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show()
@@ -219,9 +265,15 @@ public class MainActivity7 extends AppCompatActivity {
 
                         new Thread(() -> {
                             try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelUHCInfo ui = var5.get();
                                 Log.i("ui",ui.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
+                                    button_se.setEnabled(true);
+                                    resetkey.setEnabled(true);
+                                    query.setEnabled(true);
+                                    editText.setEnabled(true);
+                                    WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedUHC = ui;
                                     startActivity(intent);
@@ -237,6 +289,12 @@ public class MainActivity7 extends AppCompatActivity {
             }
         });
 
+    }
+
+    void WaitingDialog(){
+        MainActivity7.this.runOnUiThread(()->{
+            WaitDialog.Companion.waitingDialog(this);
+        });
     }
 
 

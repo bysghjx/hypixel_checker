@@ -42,31 +42,37 @@ public class MainActivity3 extends AppCompatActivity {
                     case R.id.Rb_Bed_Info:{
                          id ="bw";
                         MainActivity7.select = id;
+                        finish();
                         break;
                     }
                     case R.id.Rb_Mm_Info:{
                          id = "Mm";
                         MainActivity7.select = id;
+                        finish();
                         break;
                     }
                     case R.id.Rb_SkyWars_Info:{
                          id = "SkyWars";
                         MainActivity7.select = id;
+                        finish();
                         break;
                     }
                     case R.id.Rb_Duels_Info:{
                          id = "Duel";
                         MainActivity7.select = id;
+                        finish();
                         break;
                     }
                     case R.id.Rb_UHC_Info:{
                         id = "UHC";
                         MainActivity7.select = id;
+                        finish();
                         break;
                     }
                     default:{
                          id = "player";
                         MainActivity7.select = id;
+                        finish();
                         break;
                     }
                 }

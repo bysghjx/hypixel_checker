@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ public class MainActivity6 extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     String api;
+    Toolbar tb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,10 @@ public class MainActivity6 extends AppCompatActivity {
 
         sp = getSharedPreferences("api_data",MODE_PRIVATE);
         editor = sp.edit();
+
+        tb = findViewById(R.id.tb);
+
+        tb.setNavigationOnClickListener(v -> finish());
 
 
 
