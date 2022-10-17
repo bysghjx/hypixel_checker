@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,11 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
@@ -141,7 +136,19 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
+                                runOnUiThread(() -> {
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    AlertDialog dialog = new AlertDialog.Builder(this)
+                                            .setTitle("出现异常！")
+                                            .setMessage((CharSequence) e)
+                                            .setPositiveButton("确定", (dialog1, which) -> {
+                                                button_se.setEnabled(true);
+                                                resetkey.setEnabled(true);
+                                                query.setEnabled(true);
+                                                editText.setEnabled(true);
+                                            })
+                                            .create();
+                                });
                             }
                         }).start();
                     break;
@@ -269,17 +276,28 @@ public class MainActivity7 extends AppCompatActivity {
                                 HypixelUHCInfo ui = var5.get();
                                 Log.i("ui",ui.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
+
                                     button_se.setEnabled(true);
                                     resetkey.setEnabled(true);
                                     query.setEnabled(true);
                                     editText.setEnabled(true);
+
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedUHC = ui;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
+                                runOnUiThread(() -> {
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    AlertDialog dialog = new AlertDialog.Builder(this)
+                                            .setTitle("出现异常！")
+                                            .setMessage((CharSequence) e)
+                                            .setPositiveButton("确定", (dialog1, which) -> {
+
+                                            })
+                                            .show();
+                                });
                             }
                         }).start();
                         break;

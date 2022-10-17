@@ -1,0 +1,6 @@
+<?xml version ="1.0" encoding ="utf-8"?><!--  Learn More about how to use App Actions: https://developer.android.com/guide/actions/index.html -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@android:color/holo_blue_light" android:state_pressed="true" android:drawable="@drawable/sharp"/>
+    <item android:state_window_focused="false" android:drawable="@drawable/sharp"/>
+
+</selector>
