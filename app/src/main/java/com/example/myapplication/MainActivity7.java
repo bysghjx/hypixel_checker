@@ -12,7 +12,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.fragment.BlankFragment;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
@@ -53,8 +56,7 @@ public class MainActivity7 extends AppCompatActivity {
     public static HypixelMurderMysteryInfo lastQueriedMm;
     public static HypixelUHCInfo lastQueriedUHC;
     public static String select = "player";
-
-
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,18 @@ public class MainActivity7 extends AppCompatActivity {
 
         List<String> list = new ArrayList<>(Arrays.asList("1",
                 "2", "3", "4"));
-
         setContentView(R.layout.activity_main7);
+
+
+/*        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragment, BlankFragment.class, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("1")
+                    .commit();
+        }*/
+
 
 
 
@@ -136,11 +148,12 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(() -> {
+                                runOnUiThread(()->{
                                     WaitDialog.Companion.WaitDialogDismiss();
-                                    AlertDialog dialog = new AlertDialog.Builder(this)
+                                    String s = String.valueOf(e);
+                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
                                             .setTitle("出现异常！")
-                                            .setMessage((CharSequence) e)
+                                            .setMessage(s)
                                             .setPositiveButton("确定", (dialog1, which) -> {
                                                 button_se.setEnabled(true);
                                                 resetkey.setEnabled(true);
@@ -148,6 +161,10 @@ public class MainActivity7 extends AppCompatActivity {
                                                 editText.setEnabled(true);
                                             })
                                             .create();
+                                    dialog.setOnCancelListener(dialog12 -> {
+                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+                                    });
+                                    dialog.show();
                                 });
                             }
                         }).start();
@@ -175,7 +192,24 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
+                                runOnUiThread(()->{
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    String s = String.valueOf(e);
+                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
+                                            .setTitle("出现异常！")
+                                            .setMessage(s)
+                                            .setPositiveButton("确定", (dialog1, which) -> {
+                                                button_se.setEnabled(true);
+                                                resetkey.setEnabled(true);
+                                                query.setEnabled(true);
+                                                editText.setEnabled(true);
+                                            })
+                                            .create();
+                                    dialog.setOnCancelListener(dialog12 -> {
+                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+                                    });
+                                    dialog.show();
+                                });
                             }
                         }).start();
                         break;
@@ -202,7 +236,24 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
+                                runOnUiThread(()->{
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    String s = String.valueOf(e);
+                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
+                                            .setTitle("出现异常！")
+                                            .setMessage(s)
+                                            .setPositiveButton("确定", (dialog1, which) -> {
+                                                button_se.setEnabled(true);
+                                                resetkey.setEnabled(true);
+                                                query.setEnabled(true);
+                                                editText.setEnabled(true);
+                                            })
+                                            .create();
+                                    dialog.setOnCancelListener(dialog12 -> {
+                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+                                    });
+                                    dialog.show();
+                                });
                             }
                         }).start();
                         break;
@@ -230,7 +281,24 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
+                                runOnUiThread(()->{
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    String s = String.valueOf(e);
+                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
+                                            .setTitle("出现异常！")
+                                            .setMessage(s)
+                                            .setPositiveButton("确定", (dialog1, which) -> {
+                                                button_se.setEnabled(true);
+                                                resetkey.setEnabled(true);
+                                                query.setEnabled(true);
+                                                editText.setEnabled(true);
+                                            })
+                                            .create();
+                                    dialog.setOnCancelListener(dialog12 -> {
+                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+                                    });
+                                    dialog.show();
+                                });
                             }
                         }).start();
                         break;
@@ -258,7 +326,24 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
+                                runOnUiThread(()->{
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    String s = String.valueOf(e);
+                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
+                                            .setTitle("出现异常！")
+                                            .setMessage(s)
+                                            .setPositiveButton("确定", (dialog1, which) -> {
+                                                button_se.setEnabled(true);
+                                                resetkey.setEnabled(true);
+                                                query.setEnabled(true);
+                                                editText.setEnabled(true);
+                                            })
+                                            .create();
+                                    dialog.setOnCancelListener(dialog12 -> {
+                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+                                    });
+                                    dialog.show();
+                                });
                             }
                         }).start();
                         break;
@@ -288,15 +373,23 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(() -> {
+                                runOnUiThread(()->{
                                     WaitDialog.Companion.WaitDialogDismiss();
-                                    AlertDialog dialog = new AlertDialog.Builder(this)
+                                    String s = String.valueOf(e);
+                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
                                             .setTitle("出现异常！")
-                                            .setMessage((CharSequence) e)
+                                            .setMessage(s)
                                             .setPositiveButton("确定", (dialog1, which) -> {
-
+                                                button_se.setEnabled(true);
+                                                resetkey.setEnabled(true);
+                                                query.setEnabled(true);
+                                                editText.setEnabled(true);
                                             })
-                                            .show();
+                                            .create();
+                                    dialog.setOnCancelListener(dialog12 -> {
+                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+                                    });
+                                    dialog.show();
                                 });
                             }
                         }).start();

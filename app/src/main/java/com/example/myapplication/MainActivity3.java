@@ -27,7 +27,7 @@ public class MainActivity3 extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         radioGroup = findViewById(R.id.RG_select);
         button = findViewById(R.id.back);
-        radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+        radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
         sp = getSharedPreferences("api_data",0);
         editor = sp.edit();
         tb = findViewById(R.id.tb);
