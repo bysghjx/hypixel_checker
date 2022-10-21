@@ -26,7 +26,6 @@
             android:id="@+id/api_key"
             android:layout_width="393dp"
             android:layout_height="61dp"
-            android:background="@drawable/selecter"
             android:hint="Api Key"
             android:inputType="none"
             android:padding="10dp"
