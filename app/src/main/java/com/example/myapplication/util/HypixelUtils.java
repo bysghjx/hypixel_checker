@@ -36,12 +36,16 @@ public final class HypixelUtils {
             info.firstLogin = new Date(player.getLongValue("firstLogin"));
             info.lastLogin = new Date(player.getLongValue("lastLogin"));
             info.language = player.getString("userLanguage");
+
             List<String> list = new ArrayList<>();
-/*            JSONArray knownAliases = player.getJSONArray("knownAliases");
-            for (int i = 0; i < knownAliases.size(); i++) {
-                list.add(knownAliases.getString(i));
-            }
-            info.knownAliases = list;*/
+            JSONArray knownAliases = player.getJSONArray("knownAliases");
+//            if(knownAliases != null){
+                for (int i = 0; i < knownAliases.size(); i++) {
+                    list.add(knownAliases.getString(i));
+                }
+                info.knownAliases = list;
+            //}
+
             info.data = player.getJSONObject("stats");
             return 200;
         }
