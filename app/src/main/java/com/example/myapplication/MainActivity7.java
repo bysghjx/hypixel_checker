@@ -107,20 +107,16 @@ public class MainActivity7 extends AppCompatActivity {
 
 
         query.setOnClickListener(v -> {
-            query.setEnabled(false);
-            button_se.setEnabled(false);
-            resetkey.setEnabled(false);
-            editText.setEnabled(false);
+            setButtonDisabled();
 
             String name = editText.getText().toString();
             input_name = name;
 
             if (TextUtils.isEmpty(name)) {
                 Toast.makeText(MainActivity7.this, "name不能为空", Toast.LENGTH_SHORT).show();
-                query.setEnabled(true);
-                button_se.setEnabled(true);
-                resetkey.setEnabled(true);
-                editText.setEnabled(true);
+
+                setButtonEnabled();
+
             } else {
                 if(select == null){
                     select = "player";
@@ -138,34 +134,14 @@ public class MainActivity7 extends AppCompatActivity {
                                 MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 HypixelPlayerInfo pi = var0.get();
                                 MainActivity7.this.runOnUiThread(() -> {
-                                    button_se.setEnabled(true);
-                                    resetkey.setEnabled(true);
-                                    query.setEnabled(true);
-                                    editText.setEnabled(true);
+                                    setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedPlayer = pi;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(()->{
-                                    WaitDialog.Companion.WaitDialogDismiss();
-                                    String s = String.valueOf(e);
-                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
-                                            .setTitle("出现异常！")
-                                            .setMessage(s)
-                                            .setPositiveButton("确定", (dialog1, which) -> {
-                                                button_se.setEnabled(true);
-                                                resetkey.setEnabled(true);
-                                                query.setEnabled(true);
-                                                editText.setEnabled(true);
-                                            })
-                                            .create();
-                                    dialog.setOnCancelListener(dialog12 -> {
-                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                                    });
-                                    dialog.show();
-                                });
+                                CreateErrorDialog(e);
                             }
                         }).start();
                     break;
@@ -182,34 +158,14 @@ public class MainActivity7 extends AppCompatActivity {
                                 HypixelBedWarsInfo bi = var1.get();
                                 Log.i("bi",bi.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
-                                    button_se.setEnabled(true);
-                                    resetkey.setEnabled(true);
-                                    query.setEnabled(true);
-                                    editText.setEnabled(true);
+                                    setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedBedwars = bi;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(()->{
-                                    WaitDialog.Companion.WaitDialogDismiss();
-                                    String s = String.valueOf(e);
-                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
-                                            .setTitle("出现异常！")
-                                            .setMessage(s)
-                                            .setPositiveButton("确定", (dialog1, which) -> {
-                                                button_se.setEnabled(true);
-                                                resetkey.setEnabled(true);
-                                                query.setEnabled(true);
-                                                editText.setEnabled(true);
-                                            })
-                                            .create();
-                                    dialog.setOnCancelListener(dialog12 -> {
-                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                                    });
-                                    dialog.show();
-                                });
+                                CreateErrorDialog(e);
                             }
                         }).start();
                         break;
@@ -226,34 +182,14 @@ public class MainActivity7 extends AppCompatActivity {
                                 HypixelSkyWarsInfo si = var2.get();
                                 Log.i("si",si.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
-                                    button_se.setEnabled(true);
-                                    resetkey.setEnabled(true);
-                                    query.setEnabled(true);
-                                    editText.setEnabled(true);
+                                    setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedSkywars = si;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(()->{
-                                    WaitDialog.Companion.WaitDialogDismiss();
-                                    String s = String.valueOf(e);
-                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
-                                            .setTitle("出现异常！")
-                                            .setMessage(s)
-                                            .setPositiveButton("确定", (dialog1, which) -> {
-                                                button_se.setEnabled(true);
-                                                resetkey.setEnabled(true);
-                                                query.setEnabled(true);
-                                                editText.setEnabled(true);
-                                            })
-                                            .create();
-                                    dialog.setOnCancelListener(dialog12 -> {
-                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                                    });
-                                    dialog.show();
-                                });
+                                CreateErrorDialog(e);
                             }
                         }).start();
                         break;
@@ -271,34 +207,14 @@ public class MainActivity7 extends AppCompatActivity {
                                 HypixelDuelInfo di = var3.get();
                                 Log.i("di",di.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
-                                    button_se.setEnabled(true);
-                                    resetkey.setEnabled(true);
-                                    query.setEnabled(true);
-                                    editText.setEnabled(true);
+                                    setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedDuels = di;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(()->{
-                                    WaitDialog.Companion.WaitDialogDismiss();
-                                    String s = String.valueOf(e);
-                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
-                                            .setTitle("出现异常！")
-                                            .setMessage(s)
-                                            .setPositiveButton("确定", (dialog1, which) -> {
-                                                button_se.setEnabled(true);
-                                                resetkey.setEnabled(true);
-                                                query.setEnabled(true);
-                                                editText.setEnabled(true);
-                                            })
-                                            .create();
-                                    dialog.setOnCancelListener(dialog12 -> {
-                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                                    });
-                                    dialog.show();
-                                });
+                                CreateErrorDialog(e);
                             }
                         }).start();
                         break;
@@ -316,34 +232,14 @@ public class MainActivity7 extends AppCompatActivity {
                                 HypixelMurderMysteryInfo mi = var4.get();
                                 Log.i("mi",mi.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
-                                    button_se.setEnabled(true);
-                                    resetkey.setEnabled(true);
-                                    query.setEnabled(true);
-                                    editText.setEnabled(true);
+                                    setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedMm = mi;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(()->{
-                                    WaitDialog.Companion.WaitDialogDismiss();
-                                    String s = String.valueOf(e);
-                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
-                                            .setTitle("出现异常！")
-                                            .setMessage(s)
-                                            .setPositiveButton("确定", (dialog1, which) -> {
-                                                button_se.setEnabled(true);
-                                                resetkey.setEnabled(true);
-                                                query.setEnabled(true);
-                                                editText.setEnabled(true);
-                                            })
-                                            .create();
-                                    dialog.setOnCancelListener(dialog12 -> {
-                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                                    });
-                                    dialog.show();
-                                });
+                                CreateErrorDialog(e);
                             }
                         }).start();
                         break;
@@ -361,36 +257,14 @@ public class MainActivity7 extends AppCompatActivity {
                                 HypixelUHCInfo ui = var5.get();
                                 Log.i("ui",ui.toString());
                                 MainActivity7.this.runOnUiThread(() -> {
-
-                                    button_se.setEnabled(true);
-                                    resetkey.setEnabled(true);
-                                    query.setEnabled(true);
-                                    editText.setEnabled(true);
-
+                                    setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedUHC = ui;
                                     startActivity(intent);
                                 });
                             } catch (ExecutionException | InterruptedException e) {
-                                runOnUiThread(()->{
-                                    WaitDialog.Companion.WaitDialogDismiss();
-                                    String s = String.valueOf(e);
-                                    AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
-                                            .setTitle("出现异常！")
-                                            .setMessage(s)
-                                            .setPositiveButton("确定", (dialog1, which) -> {
-                                                button_se.setEnabled(true);
-                                                resetkey.setEnabled(true);
-                                                query.setEnabled(true);
-                                                editText.setEnabled(true);
-                                            })
-                                            .create();
-                                    dialog.setOnCancelListener(dialog12 -> {
-                                        Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                                    });
-                                    dialog.show();
-                                });
+                                CreateErrorDialog(e);
                             }
                         }).start();
                         break;
@@ -406,6 +280,40 @@ public class MainActivity7 extends AppCompatActivity {
         MainActivity7.this.runOnUiThread(()->{
             WaitDialog.Companion.waitingDialog(this);
         });
+    }
+    void CreateErrorDialog(Exception e){
+        runOnUiThread(()->{
+            WaitDialog.Companion.WaitDialogDismiss();
+            String s = String.valueOf(e);
+            AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
+                    .setTitle("出现异常！")
+                    .setMessage(s)
+                    .setPositiveButton("确定", (dialog1, which) -> {
+                        button_se.setEnabled(true);
+                        resetkey.setEnabled(true);
+                        query.setEnabled(true);
+                        editText.setEnabled(true);
+                    })
+                    .create();
+            dialog.setOnCancelListener(dialog12 -> {
+                Toast.makeText(this, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
+            });
+            dialog.show();
+        });
+    }
+
+    void setButtonEnabled(){
+        button_se.setEnabled(true);
+        resetkey.setEnabled(true);
+        query.setEnabled(true);
+        editText.setEnabled(true);
+    }
+
+    void setButtonDisabled(){
+        query.setEnabled(false);
+        button_se.setEnabled(false);
+        resetkey.setEnabled(false);
+        editText.setEnabled(false);
     }
 
 
