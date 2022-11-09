@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.myapplication.hypixel.BazaarInfo;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
@@ -118,6 +119,16 @@ public class MainActivity extends AppCompatActivity {
                         "总击杀/死亡：" +ui.kills + "/" +ui.deaths + "\n" +
                         "总胜场: " + ui.wins + "\n" +
                         "吃掉的头颅数量：" + ui.heads_eaten + "\n" ;
+                tv.setText(str);
+                break;
+            }
+            case "Bz":{
+                BazaarInfo bzi = MainActivity7.lastQueriedBazzar;
+                str = "物品名：" +bzi.name + "\n" +
+                        "购买价格: " + bzi.buyPrice + "\n" +
+                        "出售价格：" + bzi.sellPrice + "\n" +
+                        "购买量: " + bzi.buyVolume + "\n" +
+                        "出售量：" + bzi.sellVolume + "\n" ;
                 tv.setText(str);
                 break;
             }
