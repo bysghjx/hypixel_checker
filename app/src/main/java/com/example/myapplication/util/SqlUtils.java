@@ -28,7 +28,6 @@ public class SqlUtils {
     }
     public boolean closeCursor(){
         cursor.close();
-        db.close();
         return true;
     }
 }

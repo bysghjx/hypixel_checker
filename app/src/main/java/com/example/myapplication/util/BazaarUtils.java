@@ -1,8 +1,10 @@
 package com.example.myapplication.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -11,11 +13,13 @@ import com.example.myapplication.hypixel.BazaarInfo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class BazaarUtils {
 
     static JSONObject json;
-    private static Cursor cursor;
+    private static String TAG;
+
 
     public static int getBazaar(){
         String url = "https://sky.shiiyu.moe/api/v2/bazaar";
@@ -35,6 +39,7 @@ public class BazaarUtils {
         return 200;
     }
 
+    @SuppressLint("Range")
     public static int getBazaars(String item, BazaarInfo info) {
         getBazaar();
         String itemName = BazaarItemName.Companion.parseItemName(item);
@@ -49,16 +54,35 @@ public class BazaarUtils {
 
             while (iterator.hasNext()){
                 key = (String) iterator.next();
-                cursor = sqlUtils.query("emp",new String[]{"name"},"name = ?",new String[]{key},null,null,null);
-                if(!cursor.moveToNext()){
-                    ContentValues values = new ContentValues();
-                    values.put("name",key);
-                    sqlUtils.add("emp",values);
-                }
+                Cursor cursor = sqlUtils.query("emp", new String[]{"name"}, "name = ?", new String[]{key}, null, null, null);
+                    if(!cursor.moveToNext()){
+                        ContentValues values = new ContentValues();
+                        values.put("name",key);
+                        sqlUtils.add("emp",values);
+                    }
                 keys.add(key);
             }
 
             sqlUtils.closeCursor();
+
+            Cursor cursor = sqlUtils.db.rawQuery("select name from emp",null);
+            ContentValues values = new ContentValues();
+
+            while (cursor.moveToNext()){
+                String dbJs = cursor.getString(cursor.getColumnIndex("name"));
+                JSONObject jsonObject2 = JSON.parseObject(String.valueOf(json)).getJSONObject(dbJs);
+
+                if (dbJs != null) {
+                    values.put("displayname",jsonObject2.getString("name"));
+                    values.put("buyPrice",jsonObject2.getDouble("buyPrice"));
+                    values.put("sellPrice",jsonObject2.getDouble("sellPrice"));
+                    values.put("buyVolume",jsonObject2.getInteger("buyVolume"));
+                    values.put("sellVolume",jsonObject2.getInteger("sellVolume"));
+                    sqlUtils.upd("emp",values,"name = ?",new String[]{dbJs});
+                }
+
+            }
+            cursor.close();
 
             if(jsonObject == null){
                 return -199;
