@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -96,8 +97,8 @@ public class MainActivity7 extends AppCompatActivity {
         mHandler = new Handler(Looper.myLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
-                AlertDialog dialog;
                 super.handleMessage(msg);
+                AlertDialog dialog;
                 if(msg.what == 0){
                     WaitDialog.Companion.WaitDialogDismiss();
                     String s = String.valueOf(msg);
