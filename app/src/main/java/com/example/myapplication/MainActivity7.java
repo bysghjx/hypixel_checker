@@ -1,14 +1,20 @@
 package com.example.myapplication;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -27,10 +33,10 @@ import com.example.myapplication.query.HypixelMurderMysteryQuery;
 import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.query.HypixelUHCQuery;
+import com.example.myapplication.util.DBHelper;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.WaitDialog;
 
-import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,14 +61,19 @@ public class MainActivity7 extends AppCompatActivity {
     public static HypixelMurderMysteryInfo lastQueriedMm;
     public static HypixelUHCInfo lastQueriedUHC;
     public static BazaarInfo lastQueriedBazzar;
+    public DBHelper dbHelper;
+    public static SQLiteDatabase db;
+    public static ContentValues values;
 
     public static String select = "player";
     FragmentManager fragmentManager;
-
+    public static Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbInit();
 
         List<String> list = new ArrayList<>(Arrays.asList("1",
                 "2", "3", "4"));
@@ -78,6 +89,33 @@ public class MainActivity7 extends AppCompatActivity {
                     .commit();
         }*/
 
+        mHandler = new Handler(Looper.myLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                AlertDialog dialog;
+                super.handleMessage(msg);
+                if(msg.what == 0){
+                    WaitDialog.Companion.WaitDialogDismiss();
+                    String s = String.valueOf(msg);
+                    dialog = new AlertDialog.Builder(MainActivity7.this)
+                            .setTitle("出现异常！")
+                            .setMessage("遇到此问题时可以尝试重试，一般为网络原因引起" + "\n" + s)
+                            .setPositiveButton("确定", (dialog1, which) -> {
+                                setButtonEnabled();
+                            })
+                            .create();
+                    dialog.show();
+                }
+
+/*                if(msg.what == 1){
+                    setButtonEnabled();
+                    WaitDialog.Companion.WaitDialogDismiss();
+                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
+                    startActivity(intent);
+                }*/
+
+            }
+        };
 
         resetkey = findViewById(R.id.btn_reset);
         button_se = findViewById(R.id.select);
@@ -286,13 +324,20 @@ public class MainActivity7 extends AppCompatActivity {
                                 MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 BazaarInfo bzi = var6.get();
                                 Log.i("bzi", bzi.toString());
-                                MainActivity7.this.runOnUiThread(() -> {
+
+                                runOnUiThread(()->{
                                     setButtonEnabled();
                                     WaitDialog.Companion.WaitDialogDismiss();
                                     Intent intent = new Intent(MainActivity7.this, MainActivity.class);
                                     lastQueriedBazzar = bzi;
                                     startActivity(intent);
                                 });
+
+/*                                Message m = new Message();
+                                m.what = 1;
+                                m.obj = "ok";
+                                mHandler.sendMessage(m);
+                                */
                             } catch (ExecutionException | InterruptedException e) {
                                 CreateErrorDialog(e);
                             }
@@ -325,15 +370,12 @@ public class MainActivity7 extends AppCompatActivity {
         e.printStackTrace();
         runOnUiThread(() -> {
             WaitDialog.Companion.WaitDialogDismiss();
+            setButtonEnabled();
             String s = String.valueOf(e);
             AlertDialog dialog = new AlertDialog.Builder(MainActivity7.this)
                     .setTitle("出现异常！")
                     .setMessage(s)
                     .setPositiveButton("确定", (dialog1, which) -> {
-                        button_se.setEnabled(true);
-                        resetkey.setEnabled(true);
-                        query.setEnabled(true);
-                        editText.setEnabled(true);
                     })
                     .create();
             dialog.setOnCancelListener(dialog12 -> {
@@ -356,6 +398,10 @@ public class MainActivity7 extends AppCompatActivity {
         resetkey.setEnabled(false);
         editText.setEnabled(false);
     }
-
+    void dbInit(){
+        dbHelper = new DBHelper(MainActivity7.this);
+        db = dbHelper.getReadableDatabase();
+        values = new ContentValues();
+    }
 
 }

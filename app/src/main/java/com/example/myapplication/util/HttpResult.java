@@ -1,10 +1,9 @@
 package com.example.myapplication.util;
 
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 
-import com.example.myapplication.Acceptable;
+import android.os.Message;
+
 import com.example.myapplication.MainActivity7;
 
 import java.io.BufferedReader;
@@ -37,22 +36,10 @@ public class HttpResult {
             content = sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            MainActivity7 mainActivity = new MainActivity7();
-            mainActivity.runOnUiThread(()->{
-                WaitDialog.Companion.WaitDialogDismiss();
-                String s = String.valueOf(e);
-                AlertDialog dialog = new AlertDialog.Builder(mainActivity)
-                        .setTitle("出现异常！")
-                        .setMessage("遇到此问题时可以尝试重试，一般为网络原因引起"+"\n"+s)
-                        .setPositiveButton("确定", (dialog1, which) -> {
-                            mainActivity.setButtonEnabled();
-                        })
-                        .create();
-                dialog.setOnCancelListener(dialog12 -> {
-                    Toast.makeText(mainActivity, "如多次遇到此问题可在github上提交issues反馈", Toast.LENGTH_LONG).show();
-                });
-                dialog.show();
-            });
+            Message message = new Message();
+            message.what = 0;
+            message.obj = e;
+            MainActivity7.mHandler.sendMessage(message);
         } finally {
             close();
         }
