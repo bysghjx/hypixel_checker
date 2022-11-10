@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +36,7 @@ import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.query.HypixelUHCQuery;
 import com.example.myapplication.util.DBHelper;
 import com.example.myapplication.util.HypixelUtils;
+import com.example.myapplication.util.RanDomUtils;
 import com.example.myapplication.util.WaitDialog;
 
 import java.util.ArrayList;
@@ -68,6 +70,8 @@ public class MainActivity7 extends AppCompatActivity {
     public static String select = "player";
     FragmentManager fragmentManager;
     public static Handler mHandler;
+
+    public static int ran = (int) RanDomUtils.INSTANCE.createRan(5000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,10 @@ public class MainActivity7 extends AppCompatActivity {
                             })
                             .create();
                     dialog.show();
+                }
+                if(msg.what == ran){
+                    ProgressDialog progressDialog = WaitDialog.Companion.proG();
+                    progressDialog.setMessage("正在向数据库写入数据中");
                 }
 
 /*                if(msg.what == 1){

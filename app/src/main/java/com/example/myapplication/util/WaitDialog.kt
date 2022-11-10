@@ -21,6 +21,9 @@ class WaitDialog {
         fun WaitDialogDismiss(){
             progressDialog.dismiss()
         }
+        fun proG(): ProgressDialog {
+            return progressDialog;
+        }
     }
 
 }

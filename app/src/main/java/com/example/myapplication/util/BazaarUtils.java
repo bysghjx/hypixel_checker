@@ -1,9 +1,12 @@
 package com.example.myapplication.util;
 
+import static com.example.myapplication.MainActivity7.ran;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Message;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -45,6 +48,11 @@ public class BazaarUtils {
         String itemName = BazaarItemName.Companion.parseItemName(item);
         if (getBazaar() == 200) {
             JSONObject jsonObject = JSON.parseObject(String.valueOf(json)).getJSONObject(itemName);
+
+            Message message = new Message();
+            message.what = ran;
+            message.obj = message.what;
+            MainActivity7.mHandler.sendMessage(message);
 
             JSONObject jsonObject1 = new JSONObject(json);
             Iterator<String> iterator = jsonObject1.keySet().iterator();
