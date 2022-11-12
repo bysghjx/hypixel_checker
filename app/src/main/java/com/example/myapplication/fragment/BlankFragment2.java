@@ -49,7 +49,7 @@ public class BlankFragment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root == null) {
-            root = inflater.inflate(R.layout.fragment_blank, container, false);
+            root = inflater.inflate(R.layout.fragment_blank2, container, false);
         }
 
         return root;
@@ -59,8 +59,10 @@ public class BlankFragment2 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+/*
         ucanuup = view.findViewById(R.id.u_can_u_up);
         recyclerView = view.findViewById(R.id.rv);
+*/
 
 
 /*        LinearLayoutManager linearLayoutManager = new LinearLayoutManager();
