@@ -1,22 +1,21 @@
 package com.example.myapplication.util;
 
+import static com.example.myapplication.MainActivity7.db;
 import static com.example.myapplication.MainActivity7.ran;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.Message;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myapplication.MainActivity2;
 import com.example.myapplication.MainActivity7;
 import com.example.myapplication.hypixel.BazaarInfo;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.util.Iterator;
-import java.util.Optional;
 
 public class BazaarUtils {
 
@@ -24,17 +23,17 @@ public class BazaarUtils {
     private static String TAG;
 
 
-    public static int getBazaar(){
+    public static int getBazaar() throws IOException {
         String url = "https://sky.shiiyu.moe/api/v2/bazaar";
         HttpResult result = HttpUtils.get(url);
-        if (!result.isSuccess()){
+        if (!result.isSuccess()) {
             return -1;
         }
         if (result.responseCode == 200) {
             result.read();
 
             json = JSON.parseObject(result.getContent());
-            if(json == null){
+            if (json == null) {
                 return -199;
             }
         }
@@ -42,80 +41,102 @@ public class BazaarUtils {
         return 200;
     }
 
-    @SuppressLint("Range")
-    public static int getBazaars(String item, BazaarInfo info) {
+
+    public static int getBazaars(String item, BazaarInfo info) throws IOException {
         getBazaar();
         String itemName = BazaarItemName.Companion.parseItemName(item);
         if (getBazaar() == 200) {
-            JSONObject jsonObject = JSON.parseObject(String.valueOf(json)).getJSONObject(itemName);
-
             Message message = new Message();
             message.what = ran;
             message.obj = message.what;
             MainActivity7.mHandler.sendMessage(message);
 
-            JSONObject jsonObject1 = new JSONObject(json);
-            Iterator<String> iterator = jsonObject1.keySet().iterator();
-            ArrayList<String> keys = new ArrayList<String>();
-            SqlUtils sqlUtils = new SqlUtils(MainActivity7.db);
+            JSONObject data = new JSONObject(json);
+            Iterator<String> items = data.keySet().iterator();
             String key;
 
-            while (iterator.hasNext()){
-                key = (String) iterator.next();
-                Cursor cursor = sqlUtils.query("emp", new String[]{"name"}, "name = ?", new String[]{key}, null, null, null);
-                    if(!cursor.moveToNext()){
-                        ContentValues values = new ContentValues();
-                        values.put("name",key);
-                        sqlUtils.add("emp",values);
-                    }
-                keys.add(key);
+            db.beginTransaction();
+            while (items.hasNext()) {
+                key = items.next();
+                JSONObject itemData = data.getJSONObject(key);
+                String displayName = itemData.getString("name");
+                String buyPrice = itemData.getString("buyPrice");
+                String sellPrice = itemData.getString("sellPrice");
+                String buyVolume = itemData.getString("buyVolume");
+                String sellVolume = itemData.getString("sellVolume");
+                db.replace("emp", null, new ContentValuesBuilder()
+                        .put("name", key)
+                        .put("displayName", displayName)
+                        .put("buyPrice", buyPrice)
+                        .put("sellPrice", sellPrice)
+                        .put("buyVolume", buyVolume)
+                        .put("sellVolume", sellVolume)
+                        .put("time", new Timestamp(System.currentTimeMillis()).toString())
+                        .build()
+                );
             }
+            db.setTransactionSuccessful();
+            db.endTransaction();
 
-            sqlUtils.closeCursor();
-
-            Cursor cursor = sqlUtils.db.rawQuery("select name from emp",null);
-            ContentValues values = new ContentValues();
-
-            while (cursor.moveToNext()){
-                String dbJs = cursor.getString(cursor.getColumnIndex("name"));
-                JSONObject jsonObject2 = JSON.parseObject(String.valueOf(json)).getJSONObject(dbJs);
-
-                if (dbJs != null) {
-                    values.put("displayname",jsonObject2.getString("name"));
-                    values.put("buyPrice",jsonObject2.getDouble("buyPrice"));
-                    values.put("sellPrice",jsonObject2.getDouble("sellPrice"));
-                    values.put("buyVolume",jsonObject2.getInteger("buyVolume"));
-                    values.put("sellVolume",jsonObject2.getInteger("sellVolume"));
-                    sqlUtils.upd("emp",values,"name = ?",new String[]{dbJs});
-                }
-
-            }
-            cursor.close();
-
-            if(jsonObject == null){
+            JSONObject itemData = data.getJSONObject(itemName);
+            if (itemData == null) {
                 return -199;
-            }else{
-                info.name = jsonObject.getString("name");
-                double var1 = jsonObject.getDouble("buyPrice");
-                info.buyPrice = Double.parseDouble(String.format("%.2f", var1));
-                double var2 = jsonObject.getDouble("sellPrice");
-                info.sellPrice = Double.parseDouble(String.format("%.2f", var2));
-                info.buyVolume = jsonObject.getInteger("buyVolume");
-                info.sellVolume = jsonObject.getInteger("sellVolume");
+            } else {
+                info.name = itemData.getString("name");
+                double var1 = itemData.getDouble("buyPrice");
+                info.buyPrice = new BigDecimal(var1).setScale(2, RoundingMode.HALF_UP).doubleValue(); // 保留两位小数后并存储
+                double var2 = itemData.getDouble("sellPrice");
+                info.sellPrice = new BigDecimal(var2).setScale(2, RoundingMode.HALF_UP).doubleValue(); // 保留两位小数后并存储
+                info.buyVolume = itemData.getInteger("buyVolume");
+                info.sellVolume = itemData.getInteger("sellVolume");
                 return 200;
             }
         }
         return 200;
     }
 
+    public static int getBazaarsForDB() throws IOException {
+        getBazaar();
+        Message message = new Message();
+
+        JSONObject data = new JSONObject(json);
+        Iterator<String> items = data.keySet().iterator();
+        String key;
+
+        db.beginTransaction();
+        while (items.hasNext()) {
+            key = items.next();
+            JSONObject itemData = data.getJSONObject(key);
+            String displayName = itemData.getString("name");
+            String buyPrice = itemData.getString("buyPrice");
+            String sellPrice = itemData.getString("sellPrice");
+            String buyVolume = itemData.getString("buyVolume");
+            String sellVolume = itemData.getString("sellVolume");
+            db.replace("emp", null, new ContentValuesBuilder()
+                    .put("name", key)
+                    .put("displayName", displayName)
+                    .put("buyPrice", buyPrice)
+                    .put("sellPrice", sellPrice)
+                    .put("buyVolume", buyVolume)
+                    .put("sellVolume", sellVolume)
+                    .put("time", new Timestamp(System.currentTimeMillis()).toString())
+                    .build()
+            );
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        message.what = 0;
+        message.obj = message.what;
+        MainActivity2.mHandler.sendMessage(message);
+        return 200;
+    }
 
     @Deprecated
-    public static JSONObject getBazaarJson(String item){
+    public static JSONObject getBazaarJson(String item) throws IOException {
         String itemName = BazaarItemName.Companion.parseItemName(item);
-        if(getBazaar() == 200){
-
-            JSONObject jsonObject = JSON.parseObject(String.valueOf(json)).getJSONObject(itemName);
-            return jsonObject;
+        if (getBazaar() == 200) {
+            return json.getJSONObject(itemName);
         }
         return null;
     }

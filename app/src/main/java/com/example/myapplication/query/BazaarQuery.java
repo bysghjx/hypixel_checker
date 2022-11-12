@@ -7,6 +7,7 @@ import com.example.myapplication.hypixel.BazaarInfo;
 import com.example.myapplication.util.BazaarUtils;
 import com.example.myapplication.util.HypixelUtils;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class BazaarQuery implements Callable<BazaarInfo> {
@@ -20,7 +21,7 @@ public class BazaarQuery implements Callable<BazaarInfo> {
     }
 
     @Override
-    public BazaarInfo call() {
+    public BazaarInfo call() throws IOException {
         Looper.prepare();
         BazaarInfo bazaarInfo = new BazaarInfo();
         int code = BazaarUtils.getBazaars(input_name, bazaarInfo);

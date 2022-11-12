@@ -37,9 +37,12 @@ import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.query.HypixelUHCQuery;
 import com.example.myapplication.util.DBHelper;
 import com.example.myapplication.util.HypixelUtils;
+import com.example.myapplication.util.IOUtils;
 import com.example.myapplication.util.RanDomUtils;
 import com.example.myapplication.util.WaitDialog;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +52,7 @@ import java.util.concurrent.FutureTask;
 public class MainActivity7 extends AppCompatActivity {
 
 
-    Button query, button_se, resetkey;
+    Button query, button_se, resetkey,bzTest;
     EditText editText;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -116,12 +119,6 @@ public class MainActivity7 extends AppCompatActivity {
                     progressDialog.setMessage("正在向数据库写入数据中");
                 }
 
-/*                if(msg.what == 1){
-                    setButtonEnabled();
-                    WaitDialog.Companion.WaitDialogDismiss();
-                    Intent intent = new Intent(MainActivity7.this, MainActivity.class);
-                    startActivity(intent);
-                }*/
 
             }
         };
@@ -130,6 +127,7 @@ public class MainActivity7 extends AppCompatActivity {
         button_se = findViewById(R.id.select);
         editText = findViewById(R.id.mc_name);
         query = findViewById(R.id.button6);
+        bzTest = findViewById(R.id.bzListTest);
 
 
         sp = getSharedPreferences("api_data", MODE_PRIVATE);
@@ -139,6 +137,11 @@ public class MainActivity7 extends AppCompatActivity {
         api_key = sp.getString("api_key", null);
         api = api_key;
         HypixelUtils.setApiKey(api);
+
+        bzTest.setOnClickListener(v->{
+            Intent intent = new Intent(MainActivity7.this,MainActivity2.class);
+            startActivity(intent);
+        });
 
         resetkey.setOnClickListener(v -> {
             editor.remove("api_key");
@@ -188,8 +191,16 @@ public class MainActivity7 extends AppCompatActivity {
                                     lastQueriedPlayer = pi;
                                     startActivity(intent);
                                 });
-                            } catch (ExecutionException | InterruptedException e) {
+                            }  catch (InterruptedException e) {
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
                         }).start();
                         break;
@@ -213,8 +224,16 @@ public class MainActivity7 extends AppCompatActivity {
                                     lastQueriedBedwars = bi;
                                     startActivity(intent);
                                 });
-                            } catch (ExecutionException | InterruptedException e) {
+                            }  catch (InterruptedException e) {
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
                         }).start();
                         break;
@@ -238,8 +257,16 @@ public class MainActivity7 extends AppCompatActivity {
                                     lastQueriedSkywars = si;
                                     startActivity(intent);
                                 });
-                            } catch (ExecutionException | InterruptedException e) {
+                            }  catch (InterruptedException e) {
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
                         }).start();
                         break;
@@ -264,8 +291,16 @@ public class MainActivity7 extends AppCompatActivity {
                                     lastQueriedDuels = di;
                                     startActivity(intent);
                                 });
-                            } catch (ExecutionException | InterruptedException e) {
+                            }  catch (InterruptedException e) {
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
                         }).start();
                         break;
@@ -290,8 +325,16 @@ public class MainActivity7 extends AppCompatActivity {
                                     lastQueriedMm = mi;
                                     startActivity(intent);
                                 });
-                            } catch (ExecutionException | InterruptedException e) {
+                            }  catch (InterruptedException e) {
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
                         }).start();
                         break;
@@ -316,8 +359,16 @@ public class MainActivity7 extends AppCompatActivity {
                                     lastQueriedUHC = ui;
                                     startActivity(intent);
                                 });
-                            } catch (ExecutionException | InterruptedException e) {
+                            }  catch (InterruptedException e) {
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
                         }).start();
                         break;
@@ -332,7 +383,6 @@ public class MainActivity7 extends AppCompatActivity {
                             try {
                                 MainActivity7.this.runOnUiThread(this::WaitingDialog);
                                 BazaarInfo bzi = var6.get();
-                                Log.i("bzi", bzi.toString());
 
                                 runOnUiThread(()->{
                                     setButtonEnabled();
@@ -342,13 +392,17 @@ public class MainActivity7 extends AppCompatActivity {
                                     startActivity(intent);
                                 });
 
-/*                                Message m = new Message();
-                                m.what = 1;
-                                m.obj = "ok";
-                                mHandler.sendMessage(m);
-                                */
-                            } catch (ExecutionException | InterruptedException e) {
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                                 CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }
                             }
 
                         }).start();

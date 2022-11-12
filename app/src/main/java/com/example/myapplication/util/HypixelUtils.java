@@ -12,6 +12,7 @@ import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 import com.example.myapplication.hypixel.HypixelUHCInfo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public final class HypixelUtils {
     private static String apiKey;
 
-    public static int getPlayer(String uuid, HypixelPlayerInfo info) {
+    public static int getPlayer(String uuid, HypixelPlayerInfo info) throws IOException {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
@@ -55,7 +56,7 @@ public final class HypixelUtils {
     }
 
     @SuppressLint("DefaultLocale")
-    public static int getBedwars(String uuid, HypixelBedWarsInfo info) {
+    public static int getBedwars(String uuid, HypixelBedWarsInfo info) throws IOException {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
@@ -95,7 +96,7 @@ public final class HypixelUtils {
         result.close();
         return result.responseCode;
     }
-    public static int getSkyWars(String uuid, HypixelSkyWarsInfo info) {
+    public static int getSkyWars(String uuid, HypixelSkyWarsInfo info) throws IOException {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
@@ -130,7 +131,7 @@ public final class HypixelUtils {
         result.close();
         return result.responseCode;
     }
-    public static int getDuel(String uuid, HypixelDuelInfo info) {
+    public static int getDuel(String uuid, HypixelDuelInfo info) throws IOException {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
@@ -171,7 +172,7 @@ public final class HypixelUtils {
         return result.responseCode;
     }
 
-    public static int getMm(String uuid, HypixelMurderMysteryInfo info) {
+    public static int getMm(String uuid, HypixelMurderMysteryInfo info) throws IOException {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
@@ -208,7 +209,7 @@ public final class HypixelUtils {
         result.close();
         return result.responseCode;
     }
-    public static int getUHC(String uuid, HypixelUHCInfo info){
+    public static int getUHC(String uuid, HypixelUHCInfo info) throws IOException {
         checkAPIKey();
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);

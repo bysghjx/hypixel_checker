@@ -27,21 +27,29 @@ public class HttpResult {
         this.reader = reader;
     }
 
-    public void read() {
+    public void read() throws IOException {
         if (!isSuccess()) return;
         StringBuilder sb = new StringBuilder();
         String line;
+//        try {
+//            while ((line = reader.readLine()) != null) {
+//                sb.append(line).append("\n");
+//            }
+//            content = sb.toString();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Message message = new Message();
+//            message.what = 0;
+//            message.obj = e;
+//            MainActivity7.mHandler.sendMessage(message);
+//        } finally {
+//            close();
+//        }
         try {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append("\n");
             }
             content = sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Message message = new Message();
-            message.what = 0;
-            message.obj = e;
-            MainActivity7.mHandler.sendMessage(message);
         } finally {
             close();
         }

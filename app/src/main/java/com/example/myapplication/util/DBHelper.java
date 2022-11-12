@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.R;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     static String name = "query.db";
@@ -19,8 +21,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table emp(_id  integer primary key autoincrement,name text,displayname text,buyPrice varchar(6),sellPrice varchar(6),buyVolume int,sellVolume int)";
-        db.execSQL(sql);
+        db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.emp_table)));
+        db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.emp_table_index)));
     }
 
     @Override

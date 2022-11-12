@@ -8,6 +8,7 @@ import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.MojangUtils;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class HypixelMurderMysteryQuery implements Callable<HypixelMurderMysteryInfo> {
@@ -20,7 +21,7 @@ public class HypixelMurderMysteryQuery implements Callable<HypixelMurderMysteryI
     }
 
     @Override
-    public HypixelMurderMysteryInfo call() {
+    public HypixelMurderMysteryInfo call() throws IOException {
         Looper.prepare();
         String uuid = MojangUtils.getUUIDByName(input_name);
         if (uuid == null) {

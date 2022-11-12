@@ -7,6 +7,7 @@ import com.example.myapplication.hypixel.HypixelUHCInfo;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.MojangUtils;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class HypixelUHCQuery implements Callable<HypixelUHCInfo> {
@@ -19,7 +20,7 @@ public class HypixelUHCQuery implements Callable<HypixelUHCInfo> {
     }
 
     @Override
-    public HypixelUHCInfo call() {
+    public HypixelUHCInfo call() throws IOException {
         Looper.prepare();
         String uuid = MojangUtils.getUUIDByName(input_name);
         if (uuid == null) {
