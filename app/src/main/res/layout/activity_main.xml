@@ -26,16 +26,19 @@
             app:subtitle="@string/app_name"
             app:title="@string/app_name" />
 
-        <Button
-            android:id="@+id/u_can_u_up"
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ucanuup" />
+            tools:layout="@layout/fragment_blank"
+            />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+<!--                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />-->
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

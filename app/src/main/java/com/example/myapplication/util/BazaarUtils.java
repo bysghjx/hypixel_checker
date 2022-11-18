@@ -7,6 +7,7 @@ import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myapplication.InsertDBCallBack;
 import com.example.myapplication.MainActivity2;
 import com.example.myapplication.MainActivity7;
 import com.example.myapplication.hypixel.BazaarInfo;
@@ -40,7 +41,6 @@ public class BazaarUtils {
         result.close();
         return 200;
     }
-
 
     public static int getBazaars(String item, BazaarInfo info) throws IOException {
         getBazaar();
@@ -95,12 +95,12 @@ public class BazaarUtils {
         return 200;
     }
 
-    public static int getBazaarsForDB() throws IOException {
+    public static void getBazaarsForDB(InsertDBCallBack callBack) throws IOException,NullPointerException {
         getBazaar();
         Message message = new Message();
 
         JSONObject data = new JSONObject(json);
-        Iterator<String> items = data.keySet().iterator();
+        Iterator<String> items = json.keySet().iterator();
         String key;
 
         db.beginTransaction();
@@ -129,7 +129,8 @@ public class BazaarUtils {
         message.what = 0;
         message.obj = message.what;
         MainActivity2.mHandler.sendMessage(message);
-        return 200;
+        callBack.Success("Success");
+
     }
 
     @Deprecated
@@ -140,6 +141,26 @@ public class BazaarUtils {
         }
         return null;
     }
+
+    @Deprecated
+    public static int getBazaarDeprecated() throws IOException {
+        String url = "https://api.hypixel.net/skyblock/bazaar";
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+        if (result.responseCode == 200) {
+            result.read();
+
+            json = JSON.parseObject(result.getContent());
+            if (json == null) {
+                return -199;
+            }
+        }
+        result.close();
+        return 200;
+    }
+
 
 
 }

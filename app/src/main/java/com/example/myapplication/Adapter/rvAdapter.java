@@ -1,6 +1,8 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,11 +42,12 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull rvAdapter.MyViewHolder holder, int position) {
-        holder.itemName.setText(disPlayName.get(position).getName());
+        autoRefresh(holder, position);
+/*        holder.itemName.setText(disPlayName.get(position).getName());
         holder.buyPrice.setText(String.format("购买价：%s",buyPrice.get(position).getName()));
         holder.sellPrice.setText(String.format("出售价：%s",sellPrice.get(position).getName()));
         holder.buyVolume.setText(String.format("购买量：%s",buyVolume.get(position).getName()));
-        holder.sellVolume.setText(String.format("出售量：%s",sellVolume.get(position).getName()));
+        holder.sellVolume.setText(String.format("出售量：%s",sellVolume.get(position).getName()));*/
     }
 
     @Override
@@ -79,5 +82,35 @@ public class rvAdapter extends RecyclerView.Adapter<rvAdapter.MyViewHolder>{
 
     public interface OnRecyclerViewItemClickListener{
         void onRecyclerItemClick(int position);
+    }
+
+    void autoRefresh(rvAdapter.MyViewHolder holder, int position){
+        Handler handler = new Handler(Looper.myLooper());
+        holder.itemName.setText(disPlayName.get(position).getName());
+        holder.buyPrice.setText(String.format("购买价：%s",buyPrice.get(position).getName()));
+        holder.sellPrice.setText(String.format("出售价：%s",sellPrice.get(position).getName()));
+        holder.buyVolume.setText(String.format("购买量：%s",buyVolume.get(position).getName()));
+        holder.sellVolume.setText(String.format("出售量：%s",sellVolume.get(position).getName()));
+/*        handler.postDelayed(()->{
+            test(holder,position);
+        },10000);*/
+
+    }
+
+    public void addData(int position) {
+        disPlayName.add(position, disPlayName.get(position));
+        buyPrice.add(position, buyPrice.get(position));
+        sellPrice.add(position, sellPrice.get(position));
+        buyVolume.add(position, buyVolume.get(position));
+        sellVolume.add(position, sellVolume.get(position));
+        notifyItemInserted(position);
+    }
+    public void removeData(int position) {
+        disPlayName.remove(position);
+        buyPrice.remove(position);
+        sellPrice.remove(position);
+        buyVolume.remove(position);
+        sellVolume.remove(position);
+        notifyItemRemoved(position);
     }
 }
