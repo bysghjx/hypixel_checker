@@ -11,12 +11,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.MainActivity7;
 import com.example.myapplication.hypixel.AuctionsInfo;
-import com.example.myapplication.hypixel.BazaarInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.Iterator;
 
@@ -46,7 +43,7 @@ public class AuctionsUtils {
     }
 
     @Deprecated
-    public static int getAuctionsFromPlayer(String uuid, HypixelPlayerInfo info)throws IOException{
+    public static int getAuctionsFromPlayer(String uuid, HypixelPlayerInfo info) throws IOException {
         String url = String.format("https://api.hypixel.net/player?key=%s&uuid=%s", apiKey, uuid);
         HttpResult result = HttpUtils.get(url);
         if (!result.isSuccess()) {
@@ -67,7 +64,7 @@ public class AuctionsUtils {
     @Deprecated
     public static int getAuction(String item, AuctionsInfo info) throws IOException {
         getAllAuctions();
-        if(getAllAuctions() == 200){
+        if (getAllAuctions() == 200) {
             Message message = new Message();
             message.what = ran;
             message.obj = message.what;
@@ -82,9 +79,9 @@ public class AuctionsUtils {
                 String id = jsonObj.getString("id");
                 String name = jsonObj.getString("name");
                 int lowestBin = jsonObj.getInteger("lowestBin");
-                db.replace("ah",null,new ContentValuesBuilder()
-                        .put("name",id)
-                        .put("displayname",name)
+                db.replace("ah", null, new ContentValuesBuilder()
+                        .put("name", id)
+                        .put("displayname", name)
                         .put("lowestBin", String.valueOf(lowestBin))
                         .put("time", new Timestamp(System.currentTimeMillis()).toString())
                         .build()
@@ -106,8 +103,9 @@ public class AuctionsUtils {
         }*/
         return 200;
     }
+
     @Deprecated
-    public static int getAuctionsForDB() throws IOException{
+    public static int getAuctionsForDB() throws IOException {
         getAllAuctions();
         if (getAllAuctions() == 200) {
             JSONObject data = new JSONObject(json);
@@ -121,9 +119,9 @@ public class AuctionsUtils {
                 String id = jsonObj.getString("id");
                 String name = jsonObj.getString("name");
                 int lowestBin = jsonObj.getInteger("lowestBin");
-                db.replace("ah",null,new ContentValuesBuilder()
-                        .put("name",id)
-                        .put("displayname",name)
+                db.replace("ah", null, new ContentValuesBuilder()
+                        .put("name", id)
+                        .put("displayname", name)
                         .put("lowestBin", String.valueOf(lowestBin))
                         .put("time", new Timestamp(System.currentTimeMillis()).toString())
                         .build()
@@ -131,7 +129,7 @@ public class AuctionsUtils {
             }
             db.setTransactionSuccessful();
             db.endTransaction();
-            Log.e(TAG, "getAuctions: 1111" );
+            Log.e(TAG, "getAuctions: 1111");
         }
         return 200;
     }
@@ -139,6 +137,7 @@ public class AuctionsUtils {
     public static void setApiKey(String apiKey) {
         AuctionsUtils.apiKey = apiKey;
     }
+
     private static void checkAPIKey() {
         if (apiKey == null) {
             throw new IllegalStateException("Api key not set.");

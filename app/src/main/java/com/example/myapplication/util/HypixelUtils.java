@@ -1,6 +1,7 @@
 package com.example.myapplication.util;
 
 import android.annotation.SuppressLint;
+import android.icu.text.SimpleDateFormat;
 import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public final class HypixelUtils {
     private static String apiKey;
@@ -280,8 +282,11 @@ public final class HypixelUtils {
 
 
                 long end = auction.getLongValue("end");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date date = new Date(end);
+                String res = simpleDateFormat.format(date);
                 Bean End = new Bean();
-                End.setName(String.valueOf(end));
+                End.setName(res);
                 BlankFragment3.end.add(End);
 
 /*                long start = auction.getLongValue("start");

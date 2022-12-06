@@ -37,7 +37,6 @@ import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.query.HypixelUHCQuery;
 import com.example.myapplication.DAO.DBHelper;
-import com.example.myapplication.util.AuctionsUtils;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.RanDomUtils;
 import com.example.myapplication.util.WaitDialog;

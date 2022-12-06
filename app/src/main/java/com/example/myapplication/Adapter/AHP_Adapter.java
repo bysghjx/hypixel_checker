@@ -1,8 +1,6 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;

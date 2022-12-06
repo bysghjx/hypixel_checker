@@ -1,7 +1,9 @@
 package com.example.myapplication.fragment;
 
-import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,23 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Message;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.myapplication.Adapter.AHP_Adapter;
-import com.example.myapplication.Adapter.rvAdapter;
 import com.example.myapplication.Bean.Bean;
-import com.example.myapplication.MainActivity2;
 import com.example.myapplication.R;
-import com.example.myapplication.util.WaitDialog;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class BlankFragment3 extends Fragment {
@@ -38,7 +30,6 @@ public class BlankFragment3 extends Fragment {
     public static List<Bean> item_name = new ArrayList<>();
     String TAG;
     private AHP_Adapter ahp_adapter;
-    private LinearLayoutManager linearLayoutManager;
 
 
     @Override
@@ -57,14 +48,13 @@ public class BlankFragment3 extends Fragment {
     }
 
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.rv);
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
 
         AHP_Adapter ahp_adapter = new AHP_Adapter(bin, starting_bid, highest_bid_amount, end, item_name, getActivity());
@@ -76,9 +66,6 @@ public class BlankFragment3 extends Fragment {
     }
 
 
-
-
-
     private static String formatDouble(double d) {
         NumberFormat nf = NumberFormat.getInstance();
         //设置保留多少位小数
@@ -88,7 +75,6 @@ public class BlankFragment3 extends Fragment {
         //返回结果
         return nf.format(d);
     }
-
 
 
     @Override

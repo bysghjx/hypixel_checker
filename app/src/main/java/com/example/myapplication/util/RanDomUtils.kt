@@ -11,7 +11,7 @@ object RanDomUtils {
     fun createXtoX(low_time: Long,max_time: Long): Long {
         val random = Random(System.currentTimeMillis())
         val wait = random.nextLong(low_time,max_time)
-        return wait;
+        return wait
     }
 
 

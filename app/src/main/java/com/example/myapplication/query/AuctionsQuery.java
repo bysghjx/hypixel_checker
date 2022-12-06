@@ -6,17 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Looper;
 import android.os.Message;
 
-import com.example.myapplication.Bean.Bean;
 import com.example.myapplication.hypixel.AuctionsInfo;
 import com.example.myapplication.interfaces.Acceptable;
-import com.example.myapplication.interfaces.UCanUUPCallBack;
 import com.example.myapplication.util.AuctionsItemName;
-import com.example.myapplication.util.AuctionsUtils;
 import com.example.myapplication.util.HypixelUtils;
-import com.example.myapplication.util.MessageUtils;
 import com.example.myapplication.util.MojangUtils;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 public class AuctionsQuery implements Callable<AuctionsInfo> {
@@ -33,15 +28,12 @@ public class AuctionsQuery implements Callable<AuctionsInfo> {
 
     @Deprecated
     public String getTrue_name(){
-        int i = AuctionsItemName.Companion.ahSql(db, input_name, new UCanUUPCallBack() {
-            @Override
-            public List<Bean> SQL(List<Bean> sql) {
-                Message message = new Message();
-                message.what = 5;
-                message.obj = sql;
-                mHandler.sendMessage(message);
-                return null;
-            }
+        int i = AuctionsItemName.Companion.ahSql(db, input_name, sql -> {
+            Message message = new Message();
+            message.what = 5;
+            message.obj = sql;
+            mHandler.sendMessage(message);
+            return null;
         });
         if (i == 1){
             AuctionsItemName.Companion.getData();
