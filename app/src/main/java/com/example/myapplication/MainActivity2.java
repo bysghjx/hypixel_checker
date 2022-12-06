@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.MainActivity7.db;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.DAO.SqlUtils;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.fragment.BlankFragment2;
 import com.example.myapplication.fragment.BlankFragment3;
@@ -33,6 +36,7 @@ public class MainActivity2 extends AppCompatActivity {
     public static boolean search = false;
     public static Handler mHandler;
     private FragmentManager fragmentManager;
+    public static String sql;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     public static boolean AUTO_REFRESH;
@@ -44,6 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        SqlUtils sqlUtils = new SqlUtils(db);
         sp = getSharedPreferences("api_data", MODE_PRIVATE);
         editor = sp.edit();
 
