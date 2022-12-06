@@ -2,9 +2,8 @@ package com.example.myapplication.query;
 
 import android.os.Looper;
 
-import com.example.myapplication.Acceptable;
+import com.example.myapplication.interfaces.Acceptable;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
-import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.MojangUtils;
 

@@ -2,10 +2,9 @@ package com.example.myapplication.query;
 
 import android.os.Looper;
 
-import com.example.myapplication.Acceptable;
+import com.example.myapplication.interfaces.Acceptable;
 import com.example.myapplication.hypixel.BazaarInfo;
 import com.example.myapplication.util.BazaarUtils;
-import com.example.myapplication.util.HypixelUtils;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;

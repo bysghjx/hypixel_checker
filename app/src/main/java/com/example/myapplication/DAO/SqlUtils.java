@@ -1,4 +1,4 @@
-package com.example.myapplication.util;
+package com.example.myapplication.DAO;
 
 import android.content.ContentValues;
 import android.database.Cursor;

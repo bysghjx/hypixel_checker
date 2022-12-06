@@ -1,17 +1,20 @@
-package com.example.myapplication.util;
+package com.example.myapplication.DAO;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Message;
 
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.MainActivity7;
 import com.example.myapplication.R;
+import com.example.myapplication.util.IOUtils;
 
 public class DBHelper extends SQLiteOpenHelper {
 
     static String name = "query.db";
-    static int ver = 1;
+    static int ver = 2;
     Context context;
 
     public DBHelper(@Nullable Context context) {
@@ -23,10 +26,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.emp_table)));
         db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.emp_table_index)));
+        db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.ah_table)));
+        db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.ah_table_index)));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        int version = db.getVersion();
+        if (oldVersion ==1 && newVersion ==2) {
+            db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.ah_table)));
+            db.execSQL(IOUtils.read(this.context.getResources().openRawResource(R.raw.ah_table_index)));
+        }
     }
 }

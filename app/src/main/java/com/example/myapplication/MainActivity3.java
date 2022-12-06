@@ -75,6 +75,12 @@ public class MainActivity3 extends AppCompatActivity {
                         finish();
                         break;
                     }
+                    case R.id.Rb_AH_Info:{
+                        id = "ah";
+                        MainActivity7.select = id;
+                        finish();
+                        break;
+                    }
                     default:{
                          id = "player";
                         MainActivity7.select = id;

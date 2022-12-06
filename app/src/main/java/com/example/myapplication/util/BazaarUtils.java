@@ -7,7 +7,7 @@ import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.myapplication.InsertDBCallBack;
+import com.example.myapplication.interfaces.InsertDBCallBack;
 import com.example.myapplication.MainActivity2;
 import com.example.myapplication.MainActivity7;
 import com.example.myapplication.hypixel.BazaarInfo;

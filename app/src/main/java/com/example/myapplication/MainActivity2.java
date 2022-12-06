@@ -12,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,11 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Bean.Bean;
 import com.example.myapplication.fragment.BlankFragment2;
-import com.example.myapplication.util.SqlUtils;
+import com.example.myapplication.fragment.BlankFragment3;
+import com.example.myapplication.interfaces.UCanUUPCallBack;
+import com.example.myapplication.DAO.SqlUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class MainActivity2 extends AppCompatActivity {
     List<Bean> SellPrice = new ArrayList<>();
     List<Bean> BuyVolume = new ArrayList<>();
     List<Bean> SellVolume = new ArrayList<>();
-    public static boolean U_Can_U_Do_This = false;
+    public static boolean search = false;
     public static String TAG, sql;
     private Cursor cursor;
     public static Handler mHandler;
@@ -72,7 +73,10 @@ public class MainActivity2 extends AppCompatActivity {
                 super.handleMessage(msg);
                 if (msg.what == 1) {
                     String s = String.valueOf(msg);
-                    AlertDialog dialog = new AlertDialog.Builder(MainActivity2.this).setTitle("出现异常！").setMessage("遇到此问题时可以尝试重试，一般为网络原因引起" + "\n" + s).setPositiveButton("确定", (dialog1, which) -> {
+                    AlertDialog dialog = new AlertDialog.Builder(MainActivity2.this)
+                            .setTitle("出现异常！")
+                            .setMessage("遇到此问题时可以尝试重试，一般为网络原因引起" + "\n" + s)
+                            .setPositiveButton("确定", (dialog1, which) -> {
                     }).create();
                     dialog.show();
                 }
@@ -90,19 +94,34 @@ public class MainActivity2 extends AppCompatActivity {
             }).setNegativeButton("取消", null).show();
         });*/
 
-
+    if(!MainActivity7.select.equals("ah")){
         if (savedInstanceState == null) {
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragment, BlankFragment2.class, null).setReorderingAllowed(true).addToBackStack("1").commit();
+            fragmentTransaction.add(R.id.fragment, BlankFragment2.class, null)
+/*                    .setReorderingAllowed(true)
+                    .addToBackStack("1")*/
+                    .commit();
         }
+    }else {
+        if (savedInstanceState == null) {
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragment, BlankFragment3.class, null)
+/*                    .setReorderingAllowed(true)
+                    .addToBackStack("1")*/
+                    .commit();
+        }
+    }
+
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        U_Can_U_Do_This = false;
+        search = false;
+        MainActivity7.select = "player";
     }
 
     private void toolbarInit() {
@@ -121,11 +140,16 @@ public class MainActivity2 extends AppCompatActivity {
 /*        CheckBox checkBox = (CheckBox) menu.findItem(R.id.reFresh).getActionView();
         checkBox.setText(String.format("%s:开",R.string.autoRefresh));*/
         MenuItem item = menu.findItem(R.id.reFresh);
-        if(AUTO_REFRESH){
-            item.setTitle(String.format("%s:开",this.getResources().getString(R.string.autoRefresh)));
+        if(!MainActivity7.select.equals("ah")){
+            if(AUTO_REFRESH){
+                item.setTitle(String.format("%s:开",this.getResources().getString(R.string.autoRefresh)));
+            }else{
+                item.setTitle(String.format("%s:关",this.getResources().getString(R.string.autoRefresh)));
+            }
         }else{
-            item.setTitle(String.format("%s:关",this.getResources().getString(R.string.autoRefresh)));
+            item.setVisible(false);
         }
+
 
         return super.onCreateOptionsMenu(menu);
     }

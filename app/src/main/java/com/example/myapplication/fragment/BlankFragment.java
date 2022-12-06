@@ -51,13 +51,13 @@ public class BlankFragment extends Fragment {
 
         String str;
         TextView tv = view.findViewById(R.id.textView);
-        Toolbar tb = view.findViewById(R.id.tb);
+/*        Toolbar tb = view.findViewById(R.id.tb);
 
         tb.setNavigationOnClickListener(v -> {
 
-        });
+        });*/
 
-        switch (MainActivity7.select){
+/*        switch (MainActivity7.select){
             case "player": {
                 HypixelPlayerInfo pi = MainActivity7.lastQueriedPlayer;
                 str = "玩家名: " + pi.name + "\n" +
@@ -143,6 +143,6 @@ public class BlankFragment extends Fragment {
                 tv.setText(str);
                 break;
             }
-        }
+        }*/
     }
 }

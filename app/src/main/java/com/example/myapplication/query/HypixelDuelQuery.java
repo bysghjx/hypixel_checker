@@ -2,7 +2,7 @@ package com.example.myapplication.query;
 
 import android.os.Looper;
 
-import com.example.myapplication.Acceptable;
+import com.example.myapplication.interfaces.Acceptable;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.util.HypixelUtils;
 import com.example.myapplication.util.MojangUtils;

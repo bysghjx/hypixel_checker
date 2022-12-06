@@ -1,10 +1,14 @@
 package com.example.myapplication.util;
 
 import android.annotation.SuppressLint;
+import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myapplication.Bean.Bean;
+import com.example.myapplication.MainActivity7;
+import com.example.myapplication.fragment.BlankFragment3;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
 import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
@@ -19,6 +23,7 @@ import java.util.List;
 
 public final class HypixelUtils {
     private static String apiKey;
+    private static List<JSONObject> finalAuctions;
 
     public static int getPlayer(String uuid, HypixelPlayerInfo info) throws IOException {
         checkAPIKey();
@@ -234,6 +239,69 @@ public final class HypixelUtils {
             }
             result.close();
             return result.responseCode;
+    }
+    public static int getAh(String uuid)throws IOException{
+        checkAPIKey();
+        String url = String.format("https://api.hypixel.net/skyblock/auction?key=%s&player=%s", apiKey, uuid);
+        HttpResult result = HttpUtils.get(url);
+        if (!result.isSuccess()) {
+            return -1;
+        }
+        if(result.responseCode == 200){
+            result.read();
+            JSONObject js = JSON.parseObject(result.getContent());
+            JSONArray auctions = new JSONArray(js.getJSONArray("auctions"));
+            finalAuctions = new ArrayList<>();
+            for (int i = 0; i < auctions.size(); i++){
+                JSONObject auction = auctions.getJSONObject(i);
+                if (auction.getBooleanValue("claimed")) continue;
+                finalAuctions.add(auction);
+            }
+            finalAuctions.forEach(auction->{
+                boolean bin = auction.getBooleanValue("bin");
+                Bean Bin = new Bean();
+                Bin.setName(String.valueOf(bin));
+                BlankFragment3.bin.add(Bin);
+
+                long startingBid = auction.getLongValue("starting_bid");
+                Bean StartingBid = new Bean();
+                StartingBid.setName(String.valueOf(startingBid));
+                BlankFragment3.starting_bid.add(StartingBid);
+
+                long highestBidAmount = auction.getLongValue("highest_bid_amount");
+                Bean HighestBidAmount = new Bean();
+
+                if(highestBidAmount != 0){
+                    HighestBidAmount.setName("true");
+                }else{
+                    HighestBidAmount.setName("false");
+                }
+                BlankFragment3.highest_bid_amount.add(HighestBidAmount);
+
+
+                long end = auction.getLongValue("end");
+                Bean End = new Bean();
+                End.setName(String.valueOf(end));
+                BlankFragment3.end.add(End);
+
+/*                long start = auction.getLongValue("start");
+                Bean Start = new Bean();
+                Start.setName(String.valueOf(start));
+                BlankFragment3.item_name.add(Start);*/
+
+                String item_name = auction.getString("item_name");
+                Bean Item_name = new Bean();
+                Item_name.setName(item_name);
+                BlankFragment3.item_name.add(Item_name);
+
+                Message message = new Message();
+                message.what = 6;
+                message.obj = 1;
+                MainActivity7.mHandler.sendMessage(message);
+            });
+        }
+
+        return 200;
     }
 
     public static void setApiKey(String apiKey) {

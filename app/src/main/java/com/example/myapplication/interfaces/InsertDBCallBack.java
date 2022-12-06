@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.interfaces;
 
 public interface InsertDBCallBack {
     void Success(String Success);

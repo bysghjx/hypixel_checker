@@ -5,18 +5,15 @@ import static com.example.myapplication.MainActivity2.sql;
 import static com.example.myapplication.MainActivity7.db;
 import static com.example.myapplication.util.BazaarUtils.getBazaarsForDB;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,14 +28,13 @@ import com.example.myapplication.Adapter.rvAdapter;
 import com.example.myapplication.Bean.Bean;
 import com.example.myapplication.MainActivity2;
 import com.example.myapplication.R;
-import com.example.myapplication.util.SqlUtils;
+import com.example.myapplication.DAO.SqlUtils;
 import com.example.myapplication.util.WaitDialog;
 
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class BlankFragment2 extends Fragment {
@@ -74,7 +70,7 @@ public class BlankFragment2 extends Fragment {
 
         return root;
     }
-    private Parcelable recyclerViewState;
+
 
 
     @Override
@@ -97,9 +93,8 @@ public class BlankFragment2 extends Fragment {
                     .setMessage("启用搜索功能后自动刷新将被自动禁用(退出界面后将自动恢复)")
                     .setView(edt)
                     .setPositiveButton("确定", (arg0, arg1) -> {
-                MainActivity2.U_Can_U_Do_This = true;
+                MainActivity2.search = true;
                 sql = edt.getText().toString();
-                        Log.e(TAG, "onViewCreated: "+MainActivity2.U_Can_U_Do_This);
                 extracted(sql);
             }).setNegativeButton("取消", null).show();
 
@@ -168,16 +163,16 @@ public class BlankFragment2 extends Fragment {
 
     void setHandler() {
         Handler handler = new Handler(Looper.myLooper());
-        if (AUTO_REFRESH && !MainActivity2.U_Can_U_Do_This) {
+        if (AUTO_REFRESH && !MainActivity2.search) {
             handler.postDelayed(() -> {
-                Log.e(TAG, "setHandler1: "+MainActivity2.U_Can_U_Do_This);
-                if(!MainActivity2.U_Can_U_Do_This){
+                Log.e(TAG, "setHandler1: "+MainActivity2.search);
+                if(!MainActivity2.search){
                     getBzForAdapter(sqlUtils);
                 }
                 setHandler();
-            }, 10000);
+            }, 300000);
         }else{
-            Log.e(TAG, "setHandler2: "+MainActivity2.U_Can_U_Do_This);
+            Log.e(TAG, "setHandler2: "+MainActivity2.search);
             handler.postDelayed(this::setHandler,5000);
         }
     }

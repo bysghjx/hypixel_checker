@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.myapplication.hypixel.AuctionsInfo;
 import com.example.myapplication.hypixel.BazaarInfo;
 import com.example.myapplication.hypixel.HypixelBedWarsInfo;
 import com.example.myapplication.hypixel.HypixelDuelInfo;
@@ -28,6 +28,7 @@ import com.example.myapplication.hypixel.HypixelMurderMysteryInfo;
 import com.example.myapplication.hypixel.HypixelPlayerInfo;
 import com.example.myapplication.hypixel.HypixelSkyWarsInfo;
 import com.example.myapplication.hypixel.HypixelUHCInfo;
+import com.example.myapplication.query.AuctionsQuery;
 import com.example.myapplication.query.BazaarQuery;
 import com.example.myapplication.query.HypixelBedwarsQuery;
 import com.example.myapplication.query.HypixelDuelQuery;
@@ -35,13 +36,12 @@ import com.example.myapplication.query.HypixelMurderMysteryQuery;
 import com.example.myapplication.query.HypixelPlayerQuery;
 import com.example.myapplication.query.HypixelSkyWarsQuery;
 import com.example.myapplication.query.HypixelUHCQuery;
-import com.example.myapplication.util.DBHelper;
+import com.example.myapplication.DAO.DBHelper;
+import com.example.myapplication.util.AuctionsUtils;
 import com.example.myapplication.util.HypixelUtils;
-import com.example.myapplication.util.IOUtils;
 import com.example.myapplication.util.RanDomUtils;
 import com.example.myapplication.util.WaitDialog;
 
-import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +67,7 @@ public class MainActivity7 extends AppCompatActivity {
     public static HypixelMurderMysteryInfo lastQueriedMm;
     public static HypixelUHCInfo lastQueriedUHC;
     public static BazaarInfo lastQueriedBazzar;
+    public static AuctionsInfo lastQueriedAuctions;
     public DBHelper dbHelper;
     public static SQLiteDatabase db;
     public static ContentValues values;
@@ -118,7 +119,10 @@ public class MainActivity7 extends AppCompatActivity {
                     ProgressDialog progressDialog = WaitDialog.Companion.proG();
                     progressDialog.setMessage("正在向数据库写入数据中");
                 }
-
+                if(msg.what == 5){
+                    Intent intent = new Intent(MainActivity7.this,MainActivity2.class);
+                    startActivity(intent);
+                }
 
             }
         };
@@ -200,6 +204,10 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
                         }).start();
@@ -233,6 +241,10 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
                         }).start();
@@ -266,6 +278,10 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
                         }).start();
@@ -300,6 +316,10 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
                         }).start();
@@ -334,6 +354,10 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
                         }).start();
@@ -368,6 +392,10 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
                         }).start();
@@ -402,11 +430,51 @@ public class MainActivity7 extends AppCompatActivity {
                                     message.what = 0;
                                     message.obj = e;
                                     mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
                                 }
                             }
 
                         }).start();
                         break;
+                    }
+
+                    case "ah":{
+                        FutureTask<AuctionsInfo> var7 = new FutureTask<>(new AuctionsQuery(input_name, s -> {
+                            Toast.makeText(MainActivity7.this, s, Toast.LENGTH_SHORT).show();
+                            DismissWaitingDialog();
+                        },db));
+                        new Thread(var7).start();
+                        new Thread(()->{
+
+                            try {
+                                MainActivity7.this.runOnUiThread(this::WaitingDialog);
+                                AuctionsInfo ahi = var7.get();
+                                runOnUiThread(()-> {
+                                    setButtonEnabled();
+                                    WaitDialog.Companion.WaitDialogDismiss();
+                                    Intent intent = new Intent(MainActivity7.this, MainActivity2.class);
+                                    startActivity(intent);
+                                });
+                            }catch (InterruptedException e) {
+                                e.printStackTrace();
+                                CreateErrorDialog(e);
+                            } catch (ExecutionException e) {
+                                if (e.getCause() instanceof SocketTimeoutException) {
+                                    e.printStackTrace();
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = e;
+                                    mHandler.sendMessage(message);
+                                }else{
+                                    e.printStackTrace();
+                                    DismissWaitingDialog();
+                                    CreateErrorDialog(e);
+                                }
+                            }
+                        }).start();
                     }
 
                 }
@@ -415,6 +483,8 @@ public class MainActivity7 extends AppCompatActivity {
         });
 
     }
+
+
 
     void DismissWaitingDialog() {
         MainActivity7.this.runOnUiThread(() -> {

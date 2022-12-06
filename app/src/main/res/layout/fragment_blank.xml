@@ -14,19 +14,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
+<!--        <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="@string/app_name"
             app:subtitle="@string/app_name"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            />
+            />-->
 
         <TextView
             android:id="@+id/textView"
             android:layout_gravity="center"
-            android:text="test"
+            android:text="Version:Pre-Build 12.03"
+            android:textSize="20sp"
             android:layout_width="323dp"
             android:layout_height="500dp" />
 
